@@ -1,8 +1,8 @@
 ﻿[game]
 # Straight in-game baby
 lobbyenabled = false
-# Dev map for faster loading & convenience
-map = "Dev"
+# Blank castle mapping test map
+map = "CastleTest"
 role_timers = false
 admin_job_tracking = true
 role_loadout_timers = false

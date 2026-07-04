@@ -1,0 +1,16 @@
+- type: gameMap
+  id: CastleTest
+  mapName: Castle Test
+  mapPath: /Maps/castle_test.yml
+  minPlayers: 0
+  maxRandomOffset: 0
+  randomRotation: false
+  stations:
+    CastleTest:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Castle Test"
+        - type: StationJobs
+          availableJobs:
+            BaselineRole: [ -1, -1 ]
