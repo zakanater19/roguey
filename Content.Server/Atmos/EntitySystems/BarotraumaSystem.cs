@@ -200,6 +200,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public override void Update(float frameTime)
         {
+            if (!AtmosphereSystem.AtmosphericsEnabled)
+                return;
+
             _timer += frameTime;
 
             if (_timer < UpdateTimer)

@@ -13,12 +13,12 @@ namespace Content.Shared.Gravity
         public SoundSpecifier GravityShakeSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
 
         [DataField, AutoNetworkedField]
-        public bool Enabled;
+        public bool Enabled = true;
 
         /// <summary>
         /// Inherent gravity ensures GravitySystem won't change Enabled according to the gravity generators attached to this entity.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public bool Inherent;
+        public bool Inherent = true;
     }
 }

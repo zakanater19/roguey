@@ -1,9 +1,10 @@
 - type: tile
   id: Space
-  name: tiles-space
-  friction: 0
+  name: tiles-roguetown-mossy-cobblestone
+  sprite: /Textures/_Baseline/Tiles/RogueTown/mossy_cobblestone.png
   isSubfloor: true
-  isSpace: true
-  sturdy: false
-  thermalConductivity: 0.4
-  heatCapacity: 700000
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 1
+  heatCapacity: 10000
+  weather: true

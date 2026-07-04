@@ -14,6 +14,8 @@ namespace Content.Shared.Gravity;
 
 public abstract partial class SharedGravitySystem : EntitySystem
 {
+    public static readonly bool WeightlessnessEnabled = false;
+
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
 
@@ -57,12 +59,18 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     public bool IsWeightless(Entity<GravityAffectedComponent?> entity)
     {
+        if (!WeightlessnessEnabled)
+            return false;
+
         // If we can be weightless and are weightless, return true, otherwise return false
         return _weightlessQuery.Resolve(entity, ref entity.Comp, false) && entity.Comp.Weightless;
     }
 
     private bool GetWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
     {
+        if (!WeightlessnessEnabled)
+            return false;
+
         if (!_physicsQuery.Resolve(entity, ref entity.Comp2, false))
             return false;
 
@@ -160,6 +168,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
     /// </summary>
     public bool EntityOnGravitySupportingGridOrMap(Entity<TransformComponent?> entity)
     {
+        if (!WeightlessnessEnabled)
+            return true;
+
         entity.Comp ??= Transform(entity);
 
         return GravityQuery.HasComp(entity.Comp.GridUid) ||
@@ -171,6 +182,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
     /// </summary>
     public bool EntityGridOrMapHaveGravity(Entity<TransformComponent?> entity)
     {
+        if (!WeightlessnessEnabled)
+            return true;
+
         entity.Comp ??= Transform(entity);
 
         // DO NOT SET TO WEIGHTLESS IF THEY'RE IN NULL-SPACE

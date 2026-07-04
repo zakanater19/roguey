@@ -25,6 +25,8 @@ namespace Content.Server.Atmos.EntitySystems;
 [UsedImplicitly]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
+    public static readonly bool AtmosphericsEnabled = false;
+
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -99,6 +101,9 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        if (!AtmosphericsEnabled)
+            return;
 
         UpdateProcessing(frameTime);
         UpdateHighPressure(frameTime);

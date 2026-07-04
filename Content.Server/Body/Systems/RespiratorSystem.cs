@@ -77,6 +77,25 @@ public sealed class RespiratorSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        if (!AtmosphereSystem.AtmosphericsEnabled)
+        {
+            var safeQuery = EntityQueryEnumerator<RespiratorComponent>();
+            while (safeQuery.MoveNext(out var uid, out var respirator))
+            {
+                if (_mobState.IsDead(uid))
+                    continue;
+
+                respirator.Saturation = respirator.MaxSaturation;
+                if (respirator.SuffocationCycles == 0)
+                    continue;
+
+                StopSuffocation((uid, respirator));
+                respirator.SuffocationCycles = 0;
+            }
+
+            return;
+        }
+
         var query = EntityQueryEnumerator<RespiratorComponent>();
         while (query.MoveNext(out var uid, out var respirator))
         {
@@ -168,7 +187,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             // Walls and grids without atmos comp return null. I guess it makes sense to not be able to exhale in walls,
             // but this also means you cannot exhale on some grids.
-            ev.Gas ??= GasMixture.SpaceGas;
+            ev.Gas ??= GasMixture.StandardAir;
         }
 
         Exhale(entity!, ev.Gas);
@@ -207,6 +226,9 @@ public sealed class RespiratorSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
+        if (!AtmosphereSystem.AtmosphericsEnabled)
+            return true;
+
         // Get the gas at our location but don't actually remove it from the gas mixture.
         var ev = new InhaleLocationEvent
         {
@@ -230,6 +252,9 @@ public sealed class RespiratorSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
+
+        if (!AtmosphereSystem.AtmosphericsEnabled)
+            return true;
 
         var ev = new CanMetabolizeGasEvent(gas);
         RaiseLocalEvent(ent, ref ev);

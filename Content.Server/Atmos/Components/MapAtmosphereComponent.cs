@@ -11,16 +11,16 @@ namespace Content.Server.Atmos.Components;
 public sealed partial class MapAtmosphereComponent : SharedMapAtmosphereComponent
 {
     /// <summary>
-    ///     The default GasMixture a map will have. Space mixture by default.
+    ///     The default GasMixture a map will have. Planet air mixture by default.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public GasMixture Mixture = GasMixture.SpaceGas;
+    public GasMixture Mixture = GasMixture.StandardAir;
 
     /// <summary>
     ///     Whether empty tiles will be considered space or not.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Space = true;
+    public bool Space;
 
     public SharedGasTileOverlaySystem.GasOverlayData Overlay;
 }

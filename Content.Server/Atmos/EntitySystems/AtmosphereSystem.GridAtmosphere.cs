@@ -227,7 +227,7 @@ public sealed partial class AtmosphereSystem
     private (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(MapAtmosphereComponent? map)
     {
         if (map == null)
-            return (GasMixture.SpaceGas, true);
+            return (GasMixture.StandardAir, false);
 
         var air = map.Mixture;
         DebugTools.Assert(air.Immutable);

@@ -18,6 +18,18 @@ namespace Content.Shared.Atmos
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
+        public static GasMixture StandardAir
+        {
+            get
+            {
+                var air = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+                air.SetMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+                air.SetMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+                air.MarkImmutable();
+                return air;
+            }
+        }
+
         // No access, to ensure immutable mixtures are never accidentally mutated.
         [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), typeof(GasEnumerator), Other = AccessPermissions.None)]
         [DataField(customTypeSerializer: typeof(GasArraySerializer))]

@@ -168,6 +168,17 @@ public partial class AtmosphereSystem
         List<Vector2i> tiles,
         bool excite = false)
     {
+        if (!AtmosphericsEnabled)
+        {
+            var planetMixtures = new GasMixture?[tiles.Count];
+            for (var i = 0; i < tiles.Count; i++)
+            {
+                planetMixtures[i] = GasMixture.StandardAir;
+            }
+
+            return planetMixtures;
+        }
+
         GasMixture?[]? mixtures = null;
         var handled = false;
 
@@ -216,11 +227,10 @@ public partial class AtmosphereSystem
             return mixtures;
         }
 
-        // Default to a space mixture... This is a space game, after all!
         mixtures ??= new GasMixture?[tiles.Count];
         for (var i = 0; i < tiles.Count; i++)
         {
-            mixtures[i] ??= GasMixture.SpaceGas;
+            mixtures[i] ??= GasMixture.StandardAir;
         }
 
         return mixtures;
@@ -260,6 +270,9 @@ public partial class AtmosphereSystem
         Vector2i gridTile,
         bool excite = false)
     {
+        if (!AtmosphericsEnabled)
+            return GasMixture.StandardAir;
+
         // If we've been passed a grid, try to let it handle it.
         if (grid is { } gridEnt
             && _atmosQuery.Resolve(gridEnt, ref gridEnt.Comp1, false)
@@ -277,8 +290,7 @@ public partial class AtmosphereSystem
         if (map is { } mapEnt && _mapAtmosQuery.Resolve(mapEnt, ref mapEnt.Comp, false))
             return mapEnt.Comp.Mixture;
 
-        // Default to a space mixture... This is a space game, after all!
-        return GasMixture.SpaceGas;
+        return GasMixture.StandardAir;
     }
 
     /// <summary>
@@ -364,6 +376,9 @@ public partial class AtmosphereSystem
     [PublicAPI]
     public bool IsTileSpace(Entity<GridAtmosphereComponent?>? grid, Entity<MapAtmosphereComponent?>? map, Vector2i tile)
     {
+        if (!AtmosphericsEnabled)
+            return false;
+
         if (grid is { } gridEnt && _atmosQuery.Resolve(gridEnt, ref gridEnt.Comp, false)
                                 && gridEnt.Comp.Tiles.TryGetValue(tile, out var tileAtmos))
         {
@@ -373,9 +388,7 @@ public partial class AtmosphereSystem
         if (map is { } mapEnt && _mapAtmosQuery.Resolve(mapEnt, ref mapEnt.Comp, false))
             return mapEnt.Comp.Space;
 
-        // If nothing handled the event, it'll default to true.
-        // Oh well, this is a space game after all, deal with it!
-        return true;
+        return false;
     }
 
     /// <summary>
@@ -404,7 +417,7 @@ public partial class AtmosphereSystem
     [PublicAPI]
     public float GetTileHeatCapacity(Entity<GridAtmosphereComponent?>? grid, Entity<MapAtmosphereComponent?> map, Vector2i tile)
     {
-        return GetHeatCapacity(GetTileMixture(grid, map, tile) ?? GasMixture.SpaceGas);
+        return GetHeatCapacity(GetTileMixture(grid, map, tile) ?? GasMixture.StandardAir);
     }
 
     /// <summary>
