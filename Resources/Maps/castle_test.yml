@@ -1,0 +1,29 @@
+meta:
+  format: 7
+  category: Map
+  engineVersion: 272.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 07/04/2026 13:00:36
+  entityCount: 1
+maps:
+- 1
+grids: []
+orphans: []
+nullspace: []
+tilemap: {}
+entities:
+- proto: ""
+  entities:
+  - uid: 1
+    mapInit: true
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapInitialized: True
+    - type: GridTree
+    - type: Broadphase
+    - type: OccluderTree
+...
