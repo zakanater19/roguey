@@ -3,10 +3,10 @@
   id: SpeciesWeights
   weights:
     Human: 5
-    Reptilian: 4
-    SlimePerson: 4
-    Moth: 4
-    Dwarf: 2
-    Diona: 2
-    Vox: 1
-    Vulpkanin: 4
+    Reptilian: 0
+    SlimePerson: 0
+    Moth: 0
+    Dwarf: 0
+    Diona: 0
+    Vox: 0
+    Vulpkanin: 0
