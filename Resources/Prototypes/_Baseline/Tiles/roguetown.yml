@@ -1,0 +1,50 @@
+- type: tile
+  id: BaseRogueTownTile
+  abstract: true
+  baseTurf: Plating
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+  editorHidden: false
+
+- type: tile
+  id: FloorRogueTownDirt
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-dirt
+  sprite: /Textures/_Baseline/Tiles/RogueTown/dirt.png
+
+- type: tile
+  id: FloorRogueTownDarkDirt
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-dark-dirt
+  sprite: /Textures/_Baseline/Tiles/RogueTown/dark_dirt.png
+
+- type: tile
+  id: FloorRogueTownSmoothStone
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-smooth-stone
+  sprite: /Textures/_Baseline/Tiles/RogueTown/smooth_stone_tile.png
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorRogueTownRockyStone
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-rocky-stone
+  sprite: /Textures/_Baseline/Tiles/RogueTown/rocky_stone.png
+
+- type: tile
+  id: FloorRogueTownRoughRock
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-rough-rock
+  sprite: /Textures/_Baseline/Tiles/RogueTown/rough_rock.png
+
+- type: tile
+  id: FloorRogueTownMossyCobblestone
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-mossy-cobblestone
+  sprite: /Textures/_Baseline/Tiles/RogueTown/mossy_cobblestone.png
+  footstepSounds:
+    collection: FootstepFloor

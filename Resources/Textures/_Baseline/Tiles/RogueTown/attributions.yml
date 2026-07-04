@@ -1,0 +1,10 @@
+- files:
+  - dirt.png
+  - dark_dirt.png
+  - smooth_stone_tile.png
+  - rocky_stone.png
+  - rough_rock.png
+  - mossy_cobblestone.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Extracted and adapted from the local RogueTown reference sprite pack."
+  source: "roguetown icons for reference LOOK HERE FOR ICONS BUT DO NOT MODIFY"
