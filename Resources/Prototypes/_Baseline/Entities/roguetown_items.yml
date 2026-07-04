@@ -1,0 +1,92 @@
+- type: entity
+  parent: BaseSword
+  id: RogueIronArmingSword
+  name: iron arming sword
+  categories: [ ForkFiltered ]
+  description: A long iron blade with a simple crossguard. Cheaper than steel, but still made for war.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Weapons/iron_arming_sword.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 15
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,3
+  - type: DisarmMalus
+
+- type: entity
+  parent: ClothingHeadHelmetArmoredBase
+  id: ClothingHeadRogueSkullcap
+  name: skull cap
+  categories: [ ForkFiltered ]
+  description: An iron helmet which covers the top of the head.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Head/skullcap.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Head/skullcap.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+
+- type: entity
+  parent: ClothingHeadHelmetArmoredBase
+  id: ClothingHeadRogueKettleHelmet
+  name: kettle helmet
+  categories: [ ForkFiltered ]
+  description: A steel helmet which protects the top and sides of the head.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Head/kettle_helmet.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Head/kettle_helmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+
+- type: entity
+  parent: ClothingHeadRogueKettleHelmet
+  id: ClothingHeadRogueWideKettleHelmet
+  name: wide kettle helmet
+  categories: [ ForkFiltered ]
+  description: A steel helmet which protects the top and sides of the head. This one looks wider than others.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Head/wide_kettle_helmet.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Head/wide_kettle_helmet.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetArmoredBase
+  id: ClothingHeadRogueSallet
+  name: sallet
+  categories: [ ForkFiltered ]
+  description: A steel helmet which protects the ears.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Head/sallet.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Head/sallet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+
+- type: entity
+  parent: ClothingHeadHelmetArmoredBase
+  id: ClothingHeadRogueBascinet
+  name: bascinet
+  categories: [ ForkFiltered ]
+  description: A steel bascinet helmet. Though it lacks a visor, it still protects the head and ears.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Head/bascinet.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Head/bascinet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
