@@ -12,6 +12,8 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
 {
     public const string StyleClassChatContainer = "ChatContainer";
     public const string StyleClassChatOutput = "ChatOutput";
+    private const int HotbarMargin = 5;
+    private const int HotbarLeftMargin = 65;
 
     public SeparatedChatGameScreen()
     {
@@ -25,7 +27,8 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         SetAnchorAndMarginPreset(Inventory, LayoutPreset.BottomLeft, margin: 5);
         SetAnchorAndMarginPreset(TopLeftContainer, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
-        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
+        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: HotbarMargin);
+        SetMarginLeft(Hotbar, HotbarLeftMargin);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.CenterRight, margin: 10);
 
         ScreenContainer.OnSplitResizeFinished += () =>

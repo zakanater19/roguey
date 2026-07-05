@@ -5,6 +5,10 @@
   - rocky_stone.png
   - rough_rock.png
   - mossy_cobblestone.png
+  - wooden_planks.png
+  - paved_stone.png
+  - road.png
+  - grass.png
   license: "CC-BY-SA-3.0"
   copyright: "Extracted and adapted from the local RogueTown reference sprite pack."
   source: "https://github.com/SS13-Special-Codebases-Archive/RogueTown"

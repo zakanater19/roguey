@@ -8,6 +8,9 @@ namespace Content.Client.UserInterface.Screens;
 [GenerateTypedNameReferences]
 public sealed partial class DefaultGameScreen : InGameScreen
 {
+    private const int HotbarMargin = 5;
+    private const int HotbarLeftMargin = 65;
+
     public DefaultGameScreen()
     {
         RobustXamlLoader.Load(this);
@@ -19,7 +22,8 @@ public sealed partial class DefaultGameScreen : InGameScreen
         SetAnchorAndMarginPreset(TopLeft, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
         SetAnchorAndMarginPreset(Inventory, LayoutPreset.BottomLeft, margin: 5);
-        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
+        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: HotbarMargin);
+        SetMarginLeft(Hotbar, HotbarLeftMargin);
         SetAnchorAndMarginPreset(Chat, LayoutPreset.TopRight, margin: 10);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.TopRight, margin: 10);
 

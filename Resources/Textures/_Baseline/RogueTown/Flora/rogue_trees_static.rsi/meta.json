@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Extracted from the local RogueTown/Ratwood reference sprite pack.",
+    "size": {
+        "x": 96,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "roguetown_tree01"
+        },
+        {
+            "name": "roguetown_tree02"
+        },
+        {
+            "name": "roguetown_tree03"
+        },
+        {
+            "name": "roguetown_tree04"
+        },
+        {
+            "name": "roguetown_tree05"
+        },
+        {
+            "name": "roguetown_tree06"
+        }
+    ]
+}

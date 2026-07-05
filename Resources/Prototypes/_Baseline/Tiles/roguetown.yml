@@ -48,3 +48,33 @@
   sprite: /Textures/_Baseline/Tiles/RogueTown/mossy_cobblestone.png
   footstepSounds:
     collection: FootstepFloor
+
+- type: tile
+  id: FloorRogueTownWoodenPlanks
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-wooden-planks
+  sprite: /Textures/_Baseline/Tiles/RogueTown/wooden_planks.png
+  footstepSounds:
+    collection: FootstepWood
+
+- type: tile
+  id: FloorRogueTownPavedStone
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-paved-stone
+  sprite: /Textures/_Baseline/Tiles/RogueTown/paved_stone.png
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorRogueTownRoad
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-road
+  sprite: /Textures/_Baseline/Tiles/RogueTown/road.png
+
+- type: tile
+  id: FloorRogueTownGrass
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-grass
+  sprite: /Textures/_Baseline/Tiles/RogueTown/grass.png
+  footstepSounds:
+    collection: FootstepGrass

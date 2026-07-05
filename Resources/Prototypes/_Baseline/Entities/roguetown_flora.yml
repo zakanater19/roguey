@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseTree
+  id: FloraTreeRogueTownStatic
+  name: tree
+  suffix: RogueTown, Static
+  categories: [ ForkFiltered ]
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Flora/rogue_trees_static.rsi
+    offset: 0,0.9
+    layers:
+    - state: roguetown_tree01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        roguetown_tree01: ""
+        roguetown_tree02: ""
+        roguetown_tree03: ""
+        roguetown_tree04: ""
+        roguetown_tree05: ""
+        roguetown_tree06: ""
