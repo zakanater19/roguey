@@ -123,6 +123,6 @@
   source: "https://freesound.org/people/dimbark1/sounds/316797/"
 
 - files: ["sleeping.ogg"]
-  license: "Custom"
-  copyright: "Provided by project maintainer."
-  source: "Local project file"
+  license: "unknown"
+  copyright: "see ratwood archive"
+  source: "unknown"
