@@ -85,14 +85,16 @@
   interruptable: true
   priority: 1
 
-## Fallback if nothing else found
+## Global in-round ambience
 - type: ambientMusic
   id: General
   sound:
+    path: /Audio/Ambience/sleeping.ogg
     params:
       volume: -12
-    collection: AmbienceGeneral
+      loop: true
   rules: AlwaysTrue
+  priority: 100
 
 # Sound collections
 - type: soundCollection
@@ -247,7 +249,7 @@
 - type: soundCollection
   id: AmbienceStation
   files:
-    - /Audio/Ambience/shipambience.ogg
+    - /Audio/Ambience/sleeping.ogg
 
 # Rules
 - type: rules

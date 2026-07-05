@@ -98,8 +98,8 @@ public sealed partial class ContentAudioSystem
         if (obj.NewState is not GameplayState)
             return;
 
-        // If they go to game then reset the ambience timer.
-        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
+        // Start gameplay ambience immediately; looping ambience will keep itself alive.
+        _nextAudio = _timing.CurTime;
     }
 
     private void SetupAmbientSounds()
@@ -209,7 +209,7 @@ public sealed partial class ContentAudioSystem
             track.ToString(),
             Filter.Local(),
             false,
-            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
+            _musicProto.Sound.Params.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
 
         _ambientMusicStream = strim?.Entity;
 
