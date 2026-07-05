@@ -324,6 +324,20 @@ namespace Content.Shared.Hands
     }
 
     /// <summary>
+    ///     Raised directed on an item before it is moved from another hand to the active hand.
+    /// </summary>
+    /// <param name="User">The entity moving the item between hands.</param>
+    /// <param name="SourceHand">The hand currently holding the item.</param>
+    /// <param name="TargetHand">The active empty hand the item would move to.</param>
+    /// <param name="Cancelled">If true, the hand move is cancelled.</param>
+    [ByRefEvent]
+    public record struct MoveHeldEntityToActiveHandAttemptEvent(
+        EntityUid User,
+        string SourceHand,
+        string TargetHand,
+        bool Cancelled = false);
+
+    /// <summary>
     ///     Event raised by a client when they want to alt interact with the item currently in their hands.
     /// </summary>
     [Serializable, NetSerializable]

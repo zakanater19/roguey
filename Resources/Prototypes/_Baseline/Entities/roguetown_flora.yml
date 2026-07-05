@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseTree
   id: FloraTreeRogueTownStatic
-  name: tree
+  name: dead tree
   suffix: RogueTown, Static
   categories: [ ForkFiltered ]
   components:
@@ -15,8 +15,28 @@
     available:
     - random:
         roguetown_tree01: ""
-        roguetown_tree02: ""
-        roguetown_tree03: ""
-        roguetown_tree04: ""
-        roguetown_tree05: ""
-        roguetown_tree06: ""
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          RogueTownSmallLog:
+            min: 4
+            max: 5

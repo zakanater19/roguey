@@ -178,6 +178,11 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!TryGetHeldItem((uid, handsComp), handName, out var entity))
             return false;
 
+        var moveAttempt = new MoveHeldEntityToActiveHandAttemptEvent(uid, handName, handsComp.ActiveHandId);
+        RaiseLocalEvent(entity.Value, ref moveAttempt);
+        if (moveAttempt.Cancelled)
+            return false;
+
         if (!CanDropHeld(uid, handName, checkActionBlocker))
             return false;
 

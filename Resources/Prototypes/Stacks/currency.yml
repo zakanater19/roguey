@@ -9,3 +9,24 @@
   name: stack-credit
   icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
   spawn: SpaceCash
+
+- type: stack
+  id: RogueCoinGold
+  name: stack-rogue-coin-gold
+  icon: { sprite: /Textures/_Baseline/RogueTown/Items/coins.rsi, state: gold_coin1 }
+  spawn: RogueCoinGold1
+  maxCount: 20
+
+- type: stack
+  id: RogueCoinSilver
+  name: stack-rogue-coin-silver
+  icon: { sprite: /Textures/_Baseline/RogueTown/Items/coins.rsi, state: silver_coin1 }
+  spawn: RogueCoinSilver1
+  maxCount: 20
+
+- type: stack
+  id: RogueCoinCopper
+  name: stack-rogue-coin-copper
+  icon: { sprite: /Textures/_Baseline/RogueTown/Items/coins.rsi, state: copper_coin1 }
+  spawn: RogueCoinCopper1
+  maxCount: 20

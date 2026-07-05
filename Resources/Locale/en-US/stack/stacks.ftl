@@ -100,6 +100,9 @@ stack-rolling-paper = rolling {$amount ->
 
 stack-fulton = fulton
 stack-credit = speso
+stack-rogue-coin-gold = zenar
+stack-rogue-coin-silver = ziliqua
+stack-rogue-coin-copper = zenny
 stack-plasma = plasma
 stack-biomass = biomass
 stack-pyrotton = pyrotton

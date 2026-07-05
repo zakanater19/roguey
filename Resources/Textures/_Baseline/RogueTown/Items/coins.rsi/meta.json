@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Extracted and adapted from the local RogueTown reference sprite pack.",
+  "source": "https://github.com/SS13-Special-Codebases-Archive/RogueTown",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "gold_coin1"
+    },
+    {
+      "name": "gold_coin2"
+    },
+    {
+      "name": "gold_coin3"
+    },
+    {
+      "name": "gold_coin4"
+    },
+    {
+      "name": "gold_coin5"
+    },
+    {
+      "name": "gold_coin6"
+    },
+    {
+      "name": "gold_coin7"
+    },
+    {
+      "name": "gold_coin8"
+    },
+    {
+      "name": "gold_coin9"
+    },
+    {
+      "name": "gold_coin10"
+    },
+    {
+      "name": "gold_coin11"
+    },
+    {
+      "name": "gold_coin12"
+    },
+    {
+      "name": "gold_coin13"
+    },
+    {
+      "name": "gold_coin14"
+    },
+    {
+      "name": "gold_coin15"
+    },
+    {
+      "name": "gold_coin16"
+    },
+    {
+      "name": "gold_coin17"
+    },
+    {
+      "name": "gold_coin18"
+    },
+    {
+      "name": "gold_coin19"
+    },
+    {
+      "name": "gold_coin20"
+    },
+    {
+      "name": "silver_coin1"
+    },
+    {
+      "name": "silver_coin2"
+    },
+    {
+      "name": "silver_coin3"
+    },
+    {
+      "name": "silver_coin4"
+    },
+    {
+      "name": "silver_coin5"
+    },
+    {
+      "name": "silver_coin6"
+    },
+    {
+      "name": "silver_coin7"
+    },
+    {
+      "name": "silver_coin8"
+    },
+    {
+      "name": "silver_coin9"
+    },
+    {
+      "name": "silver_coin10"
+    },
+    {
+      "name": "silver_coin11"
+    },
+    {
+      "name": "silver_coin12"
+    },
+    {
+      "name": "silver_coin13"
+    },
+    {
+      "name": "silver_coin14"
+    },
+    {
+      "name": "silver_coin15"
+    },
+    {
+      "name": "silver_coin16"
+    },
+    {
+      "name": "silver_coin17"
+    },
+    {
+      "name": "silver_coin18"
+    },
+    {
+      "name": "silver_coin19"
+    },
+    {
+      "name": "silver_coin20"
+    },
+    {
+      "name": "copper_coin1"
+    },
+    {
+      "name": "copper_coin2"
+    },
+    {
+      "name": "copper_coin3"
+    },
+    {
+      "name": "copper_coin4"
+    },
+    {
+      "name": "copper_coin5"
+    },
+    {
+      "name": "copper_coin6"
+    },
+    {
+      "name": "copper_coin7"
+    },
+    {
+      "name": "copper_coin8"
+    },
+    {
+      "name": "copper_coin9"
+    },
+    {
+      "name": "copper_coin10"
+    },
+    {
+      "name": "copper_coin11"
+    },
+    {
+      "name": "copper_coin12"
+    },
+    {
+      "name": "copper_coin13"
+    },
+    {
+      "name": "copper_coin14"
+    },
+    {
+      "name": "copper_coin15"
+    },
+    {
+      "name": "copper_coin16"
+    },
+    {
+      "name": "copper_coin17"
+    },
+    {
+      "name": "copper_coin18"
+    },
+    {
+      "name": "copper_coin19"
+    },
+    {
+      "name": "copper_coin20"
+    }
+  ]
+}

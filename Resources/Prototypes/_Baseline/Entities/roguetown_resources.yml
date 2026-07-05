@@ -1,0 +1,886 @@
+- type: entity
+  parent: BaseItem
+  id: RogueTownSmallLog
+  name: small log
+  categories: [ ForkFiltered ]
+  description: A short length of rough timber.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/logsmall.rsi
+    state: icon
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedRotation: -45
+  - type: Tag
+    tags:
+    - Wooden
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: BaseItem
+  id: RogueWoodcuttingAxe
+  name: axe
+  categories: [ ForkFiltered ]
+  description: A regular iron woodcutting axe.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Weapons/axe.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.8
+    wideAnimationRotation: -135
+    swingLeft: true
+    damage:
+      types:
+        Slash: 5
+        Structural: 100
+    soundHit:
+      path: /Audio/Effects/chop.ogg
+      params:
+        variation: 0.05
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
+    sprite: _Baseline/RogueTown/Weapons/axe.rsi
+    storedRotation: -45
+  - type: Tool
+    qualities:
+    - Cutting
+    - Slicing
+  - type: UseDelay
+    delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Wood: 100
+
+- type: entity
+  parent: BaseItem
+  id: BaseRogueCoinGold
+  name: zenar
+  description: A stamped gold coin.
+  abstract: true
+  categories: [ ForkFiltered ]
+  components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin1
+    layers:
+    - state: gold_coin1
+      map: ["base"]
+  - type: Stack
+    stackType: RogueCoinGold
+    count: 1
+    baseLayer: base
+    layerFunction: Threshold
+    layerStates:
+    - gold_coin1
+    - gold_coin2
+    - gold_coin3
+    - gold_coin4
+    - gold_coin5
+    - gold_coin6
+    - gold_coin7
+    - gold_coin8
+    - gold_coin9
+    - gold_coin10
+    - gold_coin11
+    - gold_coin12
+    - gold_coin13
+    - gold_coin14
+    - gold_coin15
+    - gold_coin16
+    - gold_coin17
+    - gold_coin18
+    - gold_coin19
+    - gold_coin20
+  - type: StackLayerThreshold
+    thresholds: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 10
+  - type: RogueCoinStack
+  - type: Appearance
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold1
+  suffix: 1
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin1
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold2
+  suffix: 2
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin2
+  - type: Stack
+    count: 2
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold3
+  suffix: 3
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin3
+  - type: Stack
+    count: 3
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold4
+  suffix: 4
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin4
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold5
+  suffix: 5
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin5
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold6
+  suffix: 6
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin6
+  - type: Stack
+    count: 6
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold7
+  suffix: 7
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin7
+  - type: Stack
+    count: 7
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold8
+  suffix: 8
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin8
+  - type: Stack
+    count: 8
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold9
+  suffix: 9
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin9
+  - type: Stack
+    count: 9
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold10
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold11
+  suffix: 11
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin11
+  - type: Stack
+    count: 11
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold12
+  suffix: 12
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin12
+  - type: Stack
+    count: 12
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold13
+  suffix: 13
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin13
+  - type: Stack
+    count: 13
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold14
+  suffix: 14
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin14
+  - type: Stack
+    count: 14
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold15
+  suffix: 15
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin15
+  - type: Stack
+    count: 15
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold16
+  suffix: 16
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin16
+  - type: Stack
+    count: 16
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold17
+  suffix: 17
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin17
+  - type: Stack
+    count: 17
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold18
+  suffix: 18
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin18
+  - type: Stack
+    count: 18
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold19
+  suffix: 19
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin19
+  - type: Stack
+    count: 19
+
+- type: entity
+  parent: BaseRogueCoinGold
+  id: RogueCoinGold20
+  suffix: 20
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: gold_coin20
+  - type: Stack
+    count: 20
+
+- type: entity
+  parent: BaseItem
+  id: BaseRogueCoinSilver
+  name: ziliqua
+  description: A stamped silver coin.
+  abstract: true
+  categories: [ ForkFiltered ]
+  components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin1
+    layers:
+    - state: silver_coin1
+      map: ["base"]
+  - type: Stack
+    stackType: RogueCoinSilver
+    count: 1
+    baseLayer: base
+    layerFunction: Threshold
+    layerStates:
+    - silver_coin1
+    - silver_coin2
+    - silver_coin3
+    - silver_coin4
+    - silver_coin5
+    - silver_coin6
+    - silver_coin7
+    - silver_coin8
+    - silver_coin9
+    - silver_coin10
+    - silver_coin11
+    - silver_coin12
+    - silver_coin13
+    - silver_coin14
+    - silver_coin15
+    - silver_coin16
+    - silver_coin17
+    - silver_coin18
+    - silver_coin19
+    - silver_coin20
+  - type: StackLayerThreshold
+    thresholds: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 5
+  - type: RogueCoinStack
+  - type: Appearance
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver1
+  suffix: 1
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin1
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver2
+  suffix: 2
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin2
+  - type: Stack
+    count: 2
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver3
+  suffix: 3
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin3
+  - type: Stack
+    count: 3
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver4
+  suffix: 4
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin4
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver5
+  suffix: 5
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin5
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver6
+  suffix: 6
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin6
+  - type: Stack
+    count: 6
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver7
+  suffix: 7
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin7
+  - type: Stack
+    count: 7
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver8
+  suffix: 8
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin8
+  - type: Stack
+    count: 8
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver9
+  suffix: 9
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin9
+  - type: Stack
+    count: 9
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver10
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver11
+  suffix: 11
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin11
+  - type: Stack
+    count: 11
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver12
+  suffix: 12
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin12
+  - type: Stack
+    count: 12
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver13
+  suffix: 13
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin13
+  - type: Stack
+    count: 13
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver14
+  suffix: 14
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin14
+  - type: Stack
+    count: 14
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver15
+  suffix: 15
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin15
+  - type: Stack
+    count: 15
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver16
+  suffix: 16
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin16
+  - type: Stack
+    count: 16
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver17
+  suffix: 17
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin17
+  - type: Stack
+    count: 17
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver18
+  suffix: 18
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin18
+  - type: Stack
+    count: 18
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver19
+  suffix: 19
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin19
+  - type: Stack
+    count: 19
+
+- type: entity
+  parent: BaseRogueCoinSilver
+  id: RogueCoinSilver20
+  suffix: 20
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: silver_coin20
+  - type: Stack
+    count: 20
+
+- type: entity
+  parent: BaseItem
+  id: BaseRogueCoinCopper
+  name: zenny
+  description: A stamped copper coin.
+  abstract: true
+  categories: [ ForkFiltered ]
+  components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin1
+    layers:
+    - state: copper_coin1
+      map: ["base"]
+  - type: Stack
+    stackType: RogueCoinCopper
+    count: 1
+    baseLayer: base
+    layerFunction: Threshold
+    layerStates:
+    - copper_coin1
+    - copper_coin2
+    - copper_coin3
+    - copper_coin4
+    - copper_coin5
+    - copper_coin6
+    - copper_coin7
+    - copper_coin8
+    - copper_coin9
+    - copper_coin10
+    - copper_coin11
+    - copper_coin12
+    - copper_coin13
+    - copper_coin14
+    - copper_coin15
+    - copper_coin16
+    - copper_coin17
+    - copper_coin18
+    - copper_coin19
+    - copper_coin20
+  - type: StackLayerThreshold
+    thresholds: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 1
+  - type: RogueCoinStack
+  - type: Appearance
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper1
+  suffix: 1
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin1
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper2
+  suffix: 2
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin2
+  - type: Stack
+    count: 2
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper3
+  suffix: 3
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin3
+  - type: Stack
+    count: 3
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper4
+  suffix: 4
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin4
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper5
+  suffix: 5
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin5
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper6
+  suffix: 6
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin6
+  - type: Stack
+    count: 6
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper7
+  suffix: 7
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin7
+  - type: Stack
+    count: 7
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper8
+  suffix: 8
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin8
+  - type: Stack
+    count: 8
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper9
+  suffix: 9
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin9
+  - type: Stack
+    count: 9
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper10
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper11
+  suffix: 11
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin11
+  - type: Stack
+    count: 11
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper12
+  suffix: 12
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin12
+  - type: Stack
+    count: 12
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper13
+  suffix: 13
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin13
+  - type: Stack
+    count: 13
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper14
+  suffix: 14
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin14
+  - type: Stack
+    count: 14
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper15
+  suffix: 15
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin15
+  - type: Stack
+    count: 15
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper16
+  suffix: 16
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin16
+  - type: Stack
+    count: 16
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper17
+  suffix: 17
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin17
+  - type: Stack
+    count: 17
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper18
+  suffix: 18
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin18
+  - type: Stack
+    count: 18
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper19
+  suffix: 19
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin19
+  - type: Stack
+    count: 19
+
+- type: entity
+  parent: BaseRogueCoinCopper
+  id: RogueCoinCopper20
+  suffix: 20
+  components:
+  - type: Icon
+    sprite: _Baseline/RogueTown/Items/coins.rsi
+    state: copper_coin20
+  - type: Stack
+    count: 20
