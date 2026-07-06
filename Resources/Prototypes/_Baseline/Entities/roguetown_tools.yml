@@ -1,0 +1,45 @@
+- type: entity
+  parent: BaseItem
+  id: RogueIronPickaxe
+  name: iron pick
+  categories: [ ForkFiltered ]
+  description: This tool is essential for mining in the dark depths.
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Weapons/pickaxe.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: -135
+    swingLeft: true
+    damage:
+      groups:
+        Brute: 5
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+      params:
+        volume: -3
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      groups:
+        Brute: 10
+      types:
+        Structural: 30
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
+    sprite: _Baseline/RogueTown/Weapons/pickaxe.rsi
+    storedRotation: -45
+  - type: UseDelay
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Wood: 100
+  - type: StaticPrice
+    price: 10

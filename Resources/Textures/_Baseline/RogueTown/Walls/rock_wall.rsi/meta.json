@@ -9,15 +9,19 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "full"
     },
     {
-      "name": "inhand-left",
-      "directions": 4
+      "name": "full_south"
     },
     {
-      "name": "inhand-right",
-      "directions": 4
+      "name": "full_east"
+    },
+    {
+      "name": "full_north"
+    },
+    {
+      "name": "full_west"
     }
   ]
 }

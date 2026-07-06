@@ -1,0 +1,131 @@
+- type: entity
+  parent: BaseWall
+  id: RogueTownStoneWall
+  name: stone wall
+  categories: [ ForkFiltered ]
+  description: A heavy wall of worked stone.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Walls/stone_wall.rsi
+    layers:
+    - state: full
+    - map: [ "enum.EdgeLayer.South" ]
+      state: full_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: full_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: full_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: full_west
+  - type: Icon
+    sprite: _Baseline/RogueTown/Walls/stone_wall.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:RogueTownSetTileBehavior
+        tile: FloorRogueTownSmoothStone
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+  - type: RogueTownMiningWall
+
+- type: entity
+  parent: BaseWall
+  id: RogueTownRockWall
+  name: rock
+  categories: [ ForkFiltered ]
+  description: A rough wall of natural rock.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Walls/rock_wall.rsi
+    layers:
+    - state: full
+    - map: [ "enum.EdgeLayer.South" ]
+      state: full_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: full_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: full_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: full_west
+  - type: Icon
+    sprite: _Baseline/RogueTown/Walls/rock_wall.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:RogueTownSetTileBehavior
+        tile: FloorRogueTownRockyStone
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+  - type: RogueTownMiningWall
+
+- type: entity
+  parent: BaseWall
+  id: RogueTownPlankWall
+  name: plank wall
+  categories: [ ForkFiltered ]
+  description: A rough-hewn wall of wooden planks.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Walls/plank_wall.rsi
+    layers:
+    - state: full
+    - map: [ "enum.EdgeLayer.South" ]
+      state: full_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: full_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: full_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: full_west
+  - type: Icon
+    sprite: _Baseline/RogueTown/Walls/plank_wall.rsi
+    state: full
+  - type: IconSmooth
+    key: woods
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:RogueTownSetTileBehavior
+        tile: FloorRogueTownWoodenPlanks
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
