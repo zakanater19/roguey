@@ -24,12 +24,6 @@
     key: walls
     mode: NoSprite
   - type: SmoothEdge
-  - type: ReplaceFloorOnSpawn
-    replaceableTiles: null
-    replacementTiles:
-    - FloorRogueTownSmoothStone
-    offsets:
-    - 0,0
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
@@ -38,8 +32,6 @@
     - trigger: !type:DamageTrigger
         damage: 500
       behaviors:
-      - !type:RogueTownSetTileBehavior
-        tile: FloorRogueTownSmoothStone
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
@@ -75,12 +67,6 @@
     key: walls
     mode: NoSprite
   - type: SmoothEdge
-  - type: ReplaceFloorOnSpawn
-    replaceableTiles: null
-    replacementTiles:
-    - FloorRogueTownRockyStone
-    offsets:
-    - 0,0
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
@@ -89,8 +75,6 @@
     - trigger: !type:DamageTrigger
         damage: 13
       behaviors:
-      - !type:RogueTownSetTileBehavior
-        tile: FloorRogueTownRockyStone
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
@@ -126,12 +110,6 @@
     key: woods
     mode: NoSprite
   - type: SmoothEdge
-  - type: ReplaceFloorOnSpawn
-    replaceableTiles: null
-    replacementTiles:
-    - FloorRogueTownWoodenPlanks
-    offsets:
-    - 0,0
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -140,8 +118,6 @@
     - trigger: !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:RogueTownSetTileBehavior
-        tile: FloorRogueTownWoodenPlanks
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
