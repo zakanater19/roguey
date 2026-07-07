@@ -24,6 +24,12 @@
     key: walls
     mode: NoSprite
   - type: SmoothEdge
+  - type: ReplaceFloorOnSpawn
+    replaceableTiles: null
+    replacementTiles:
+    - FloorRogueTownSmoothStone
+    offsets:
+    - 0,0
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
@@ -69,13 +75,19 @@
     key: walls
     mode: NoSprite
   - type: SmoothEdge
+  - type: ReplaceFloorOnSpawn
+    replaceableTiles: null
+    replacementTiles:
+    - FloorRogueTownRockyStone
+    offsets:
+    - 0,0
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 300
+        damage: 13
       behaviors:
       - !type:RogueTownSetTileBehavior
         tile: FloorRogueTownRockyStone
@@ -114,6 +126,12 @@
     key: woods
     mode: NoSprite
   - type: SmoothEdge
+  - type: ReplaceFloorOnSpawn
+    replaceableTiles: null
+    replacementTiles:
+    - FloorRogueTownWoodenPlanks
+    offsets:
+    - 0,0
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
