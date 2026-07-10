@@ -34,8 +34,8 @@
   - type: PointLight
     enabled: false
     color: "#da8c45"
-    radius: 6
-    energy: 2
+    radius: 7
+    energy: 2.5
     netsync: false
   - type: MeleeWeapon
     damage:
@@ -97,8 +97,8 @@
   - type: PointLight
     enabled: false
     color: "#da8c45"
-    radius: 6
-    energy: 2
+    radius: 7
+    energy: 2.5
 
 - type: entity
   parent: RogueTownWallTorchHolder
@@ -123,6 +123,10 @@
     mode: RogueTownWallmountNorth
     snap:
     - Wallmount
+  components:
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
 
 - type: entity
   parent: RogueTownWallTorchHolder
@@ -132,6 +136,10 @@
     mode: RogueTownWallmountSouth
     snap:
     - Wallmount
+  components:
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
 
 - type: entity
   parent: RogueTownWallTorchHolder
@@ -183,8 +191,8 @@
   - type: PointLight
     enabled: true
     color: "#f9ad80"
-    radius: 7
-    energy: 2
+    radius: 9
+    energy: 2.5
 
 - type: entity
   parent: RogueTownStoneFire

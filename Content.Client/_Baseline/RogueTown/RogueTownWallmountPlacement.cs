@@ -27,10 +27,13 @@ public abstract class RogueTownWallmountPlacement : PlacementMode
         var coordinates = new EntityCoordinates(MouseCoords.EntityId, CurrentTile.GridIndices);
         var offset = _direction switch
         {
+            // North/south states are centered horizontally and belong on the wall edge.
+            // East/west states contain their own horizontal edge offset and stay in the adjacent tile.
             Direction.North => new Vector2(0.5f, 1f),
-            Direction.South => new Vector2(0.5f, 0f),
-            Direction.East => new Vector2(1f, 0.5f),
-            Direction.West => new Vector2(0f, 0.5f),
+            // The south-facing source state reaches toward the tile's upper edge.
+            Direction.South => new Vector2(0.5f, 0.49f),
+            Direction.East => new Vector2(1.5f, 0.5f),
+            Direction.West => new Vector2(-0.5f, 0.5f),
             _ => Vector2.Zero
         };
 
