@@ -5,25 +5,18 @@
   categories: [ ForkFiltered ]
   description: A heavy wall of worked stone.
   components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: Sprite
     sprite: _Baseline/RogueTown/Walls/stone_wall.rsi
     layers:
     - state: full
-    - map: [ "enum.EdgeLayer.South" ]
-      state: full_south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: full_east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: full_north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: full_west
   - type: Icon
     sprite: _Baseline/RogueTown/Walls/stone_wall.rsi
     state: full
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  - type: SmoothEdge
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
@@ -48,25 +41,18 @@
   categories: [ ForkFiltered ]
   description: A rough wall of natural rock.
   components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: Sprite
     sprite: _Baseline/RogueTown/Walls/rock_wall.rsi
     layers:
     - state: full
-    - map: [ "enum.EdgeLayer.South" ]
-      state: full_south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: full_east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: full_north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: full_west
   - type: Icon
     sprite: _Baseline/RogueTown/Walls/rock_wall.rsi
     state: full
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  - type: SmoothEdge
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
@@ -91,25 +77,18 @@
   categories: [ ForkFiltered ]
   description: A rough-hewn wall of wooden planks.
   components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: Sprite
     sprite: _Baseline/RogueTown/Walls/plank_wall.rsi
     layers:
     - state: full
-    - map: [ "enum.EdgeLayer.South" ]
-      state: full_south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: full_east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: full_north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: full_west
   - type: Icon
     sprite: _Baseline/RogueTown/Walls/plank_wall.rsi
     state: full
-  - type: IconSmooth
-    key: woods
-    mode: NoSprite
-  - type: SmoothEdge
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
