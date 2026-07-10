@@ -45,6 +45,69 @@
 
 - type: entity
   parent: BaseItem
+  id: RogueTownCoal
+  name: coal
+  categories: [ ForkFiltered ]
+  description: A chunk of black coal.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/ore.rsi
+    state: orecoal1
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Tag
+    tags:
+    - RogueTownCoal
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: BaseItem
+  id: RogueTownIronOre
+  name: iron ore
+  categories: [ ForkFiltered ]
+  description: A raw chunk of iron-bearing ore.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/ore.rsi
+    state: oreiron2
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Tag
+    tags:
+    - RogueTownIronOre
+  - type: StaticPrice
+    price: 2
+
+- type: entity
+  parent: BaseItem
+  id: RogueTownIronIngot
+  name: iron ingot
+  categories: [ ForkFiltered ]
+  description: A bar of workable iron.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/ore.rsi
+    state: ingotiron
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedRotation: -45
+  - type: Tag
+    tags:
+    - RogueTownIronIngot
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  parent: BaseItem
   id: RogueWoodcuttingAxe
   name: axe
   categories: [ ForkFiltered ]

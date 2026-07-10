@@ -1,0 +1,57 @@
+- type: entity
+  parent: BaseStructure
+  id: RogueTownSmelter
+  name: smelter
+  categories: [ ForkFiltered ]
+  description: A stone smelter for turning ore into workable metal.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Structures/smelter.rsi
+    layers:
+    - state: smelter0
+      map: ["enum.RogueTownSmelterVisualLayers.Base"]
+  - type: Icon
+    sprite: _Baseline/RogueTown/Structures/smelter.rsi
+    state: smelter0
+  - type: InteractionOutline
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.RogueTownSmelterVisuals.Burning:
+        enum.RogueTownSmelterVisualLayers.Base:
+          True: { state: smelter1 }
+          False: { state: smelter0 }
+  - type: RogueTownSmelter
+  - type: ItemSlots
+    slots:
+      coal_slot:
+        swap: false
+        ejectOnBreak: true
+        whitelist:
+          tags:
+          - RogueTownCoal
+      ore_slot:
+        swap: false
+        ejectOnBreak: true
+        whitelist:
+          tags:
+          - RogueTownIronOre
+  - type: ContainerContainer
+    containers:
+      coal_slot: !type:ContainerSlot
+      ore_slot: !type:ContainerSlot
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6

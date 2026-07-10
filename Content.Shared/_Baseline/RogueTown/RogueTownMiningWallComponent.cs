@@ -9,4 +9,17 @@ public sealed partial class RogueTownMiningWallComponent : Component
 {
     [DataField]
     public ProtoId<TagPrototype> RequiredToolTag = "Pickaxe";
+
+    [DataField]
+    public List<RogueTownMiningDropEntry> ExtraDrops = new();
+}
+
+[DataDefinition]
+public sealed partial class RogueTownMiningDropEntry
+{
+    [DataField(required: true)]
+    public EntProtoId Entity;
+
+    [DataField]
+    public float Probability = 1f;
 }

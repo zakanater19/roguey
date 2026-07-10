@@ -1222,6 +1222,15 @@
   id: RipleyRLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
+  id: RogueTownCoal
+
+- type: Tag
+  id: RogueTownIronIngot
+
+- type: Tag
+  id: RogueTownIronOre
+
+- type: Tag
   id: RogueTownStone # ConstructionGraph: RogueTownStoneWall
 
 - type: Tag
