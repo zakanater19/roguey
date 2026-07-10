@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesRogueLeatherBoots
+  name: leather boots
+  categories: [ ForkFiltered ]
+  description: A sturdy pair of leather boots.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Shoes/leather_boots.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Shoes/leather_boots.rsi

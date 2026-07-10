@@ -1,0 +1,11 @@
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformRogueUndershirt
+  name: shirt
+  categories: [ ForkFiltered ]
+  description: A simple linen shirt.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Shirts/undershirt.rsi
+  - type: Clothing
+    sprite: _Baseline/RogueTown/Clothing/Shirts/undershirt.rsi
