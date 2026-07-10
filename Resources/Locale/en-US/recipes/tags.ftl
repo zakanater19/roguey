@@ -41,6 +41,7 @@ construction-graph-tag-glass-shard = a glass shard
 construction-graph-tag-plasma-glass-shard = a plasma glass shard
 construction-graph-tag-uranium-glass-shard = a uranium glass shard
 construction-graph-tag-reinforced-glass-shard = a reinforced glass shard
+construction-graph-tag-roguetown-stone = a stone
 construction-graph-tag-grey-flatcap = a grey flatcap
 construction-graph-tag-brown-flatcap = a brown flatcap
 construction-graph-tag-cuffs = cuffs

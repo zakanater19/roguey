@@ -1222,6 +1222,9 @@
   id: RipleyRLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
+  id: RogueTownStone # ConstructionGraph: RogueTownStoneWall
+
+- type: Tag
   id: RollingPaper # Storage whitelist: PackPaperRolling, PackPaperRollingFilters
 
 - type: Tag

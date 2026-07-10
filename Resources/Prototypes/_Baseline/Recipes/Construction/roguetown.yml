@@ -1,0 +1,40 @@
+- type: construction
+  id: RogueTownStoneWall
+  graph: RogueTownStoneWall
+  startNode: start
+  targetNode: stoneWall
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  hide: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: constructionGraph
+  id: RogueTownStoneWall
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: stoneWall
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - tag: RogueTownStone
+        name: construction-graph-tag-roguetown-stone
+        icon:
+          sprite: _Baseline/RogueTown/Items/stone.rsi
+          state: icon
+        doAfter: 1
+      - tag: RogueTownStone
+        name: construction-graph-tag-roguetown-stone
+        icon:
+          sprite: _Baseline/RogueTown/Items/stone.rsi
+          state: icon
+        doAfter: 1
+
+  - node: stoneWall
+    entity: RogueTownStoneWall

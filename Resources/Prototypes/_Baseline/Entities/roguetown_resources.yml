@@ -24,6 +24,27 @@
 
 - type: entity
   parent: BaseItem
+  id: RogueTownStone
+  name: stone
+  categories: [ ForkFiltered ]
+  description: A small, workable stone.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/stone.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Tag
+    tags:
+    - RogueTownStone
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: BaseItem
   id: RogueWoodcuttingAxe
   name: axe
   categories: [ ForkFiltered ]

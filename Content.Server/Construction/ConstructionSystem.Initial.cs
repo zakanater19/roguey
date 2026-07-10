@@ -470,8 +470,7 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);
             }
 
-            if (!_actionBlocker.CanInteract(user, null)
-                || !TryComp(user, out HandsComponent? hands) || _handsSystem.GetActiveItem((user, hands)) == null)
+            if (!_actionBlocker.CanInteract(user, null) || !HasComp<HandsComponent>(user))
             {
                 Cleanup();
                 return;
@@ -496,21 +495,22 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (_handsSystem.GetActiveItem((user, hands)) is not {Valid: true} holding)
-            {
-                Cleanup();
-                return;
-            }
-
             // No support for conditions here!
+            var nearby = EnumerateNearby(user).ToArray();
 
             foreach (var step in edge.Steps)
             {
                 switch (step)
                 {
                     case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding, EntityManager, Factory))
+                        foreach (var entity in nearby)
+                        {
+                            if (!entityInsert.EntityValid(entity, EntityManager, Factory))
+                                continue;
+
                             valid = true;
+                            break;
+                        }
                         break;
                     case ToolConstructionGraphStep _:
                         throw new InvalidDataException("Invalid first step for item recipe!");
