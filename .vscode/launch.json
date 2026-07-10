@@ -27,7 +27,7 @@
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
-            "args": ["--data-dir", "${workspaceFolder}/Resources"],
+            "args": [],
             "console": "integratedTerminal",
             "stopAtEntry": false
         },

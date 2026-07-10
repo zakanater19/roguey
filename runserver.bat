@@ -1,3 +1,3 @@
 @echo off
-dotnet run --project Content.Server -- --data-dir Resources
+dotnet run --project Content.Server
 pause
