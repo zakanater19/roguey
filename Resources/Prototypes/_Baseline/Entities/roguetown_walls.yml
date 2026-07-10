@@ -8,8 +8,7 @@
   - type: Transform
     anchored: true
   - type: Anchorable
-    flags:
-    - Anchorable
+    flags: None
   - type: Sprite
     sprite: _Baseline/RogueTown/Walls/stone_wall.rsi
     layers:
@@ -47,8 +46,7 @@
   - type: Transform
     anchored: true
   - type: Anchorable
-    flags:
-    - Anchorable
+    flags: None
   - type: Sprite
     sprite: _Baseline/RogueTown/Walls/rock_wall.rsi
     layers:
@@ -93,8 +91,7 @@
   - type: Transform
     anchored: true
   - type: Anchorable
-    flags:
-    - Anchorable
+    flags: None
   - type: Sprite
     sprite: _Baseline/RogueTown/Walls/plank_wall.rsi
     layers:
@@ -115,3 +112,19 @@
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroyHeavy
+
+- type: entity
+  parent: RogueTownPlankWall
+  id: RogueTownWoodenWindowWall
+  name: wooden window wall
+  description: A solid wooden wall with an open window that lets sight and light through.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Walls/wooden_window.rsi
+    layers:
+    - state: full
+  - type: Icon
+    sprite: _Baseline/RogueTown/Walls/wooden_window.rsi
+    state: full
+  - type: Occluder
+    enabled: false

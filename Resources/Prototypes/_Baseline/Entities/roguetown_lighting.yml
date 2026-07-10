@@ -1,0 +1,203 @@
+- type: entity
+  parent: BaseItem
+  id: RogueTownTorch
+  name: torch
+  categories: [ ForkFiltered ]
+  description: A pitch-soaked wooden torch. Use it in hand to light or snuff it.
+  components:
+  - type: RogueTownTorch
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Lighting/rogue_lighting.rsi
+    layers:
+    - state: torch
+      map: [ "base" ]
+    - state: torch-on
+      map: [ "light" ]
+      visible: false
+  - type: Item
+    size: Normal
+    sprite: _Baseline/RogueTown/Lighting/rogue_lighting.rsi
+    storedRotation: -45
+  - type: ItemToggle
+    onActivate: false
+  - type: ItemTogglePointLight
+  - type: ItemToggleHot
+  - type: Appearance
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        base:
+          True: { visible: false }
+          False: { visible: true }
+  - type: PointLight
+    enabled: false
+    color: "#da8c45"
+    radius: 6
+    energy: 2
+    netsync: false
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Tag
+    tags:
+    - Torch
+
+- type: entity
+  parent: RogueTownTorch
+  id: RogueTownTorchLit
+  suffix: Lit
+  components:
+  - type: ItemToggle
+    activated: true
+
+- type: entity
+  parent: BaseWallmount
+  id: RogueTownWallTorchHolder
+  abstract: true
+  name: wall torch holder
+  categories: [ ForkFiltered ]
+  description: A wall-mounted wooden sconce that accepts a torch.
+  placement:
+    mode: WallmountLight
+    snap:
+    - Wallmount
+  components:
+  - type: RogueTownTorchHolder
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Lighting/rogue_lighting.rsi
+    layers:
+    - state: torchwall
+      map: [ "holder" ]
+  - type: Icon
+    sprite: _Baseline/RogueTown/Lighting/rogue_lighting.rsi
+    state: torchwall1
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.RogueTownTorchHolderVisuals.State:
+        holder:
+          Empty: { state: torchwall }
+          Unlit: { state: torchwall0 }
+          Lit: { state: torchwall1 }
+  - type: ItemSlots
+    slots:
+      torch_slot:
+        insertOnInteract: true
+        ejectOnInteract: true
+        startingItem: RogueTownTorchLit
+        whitelist:
+          components:
+          - RogueTownTorch
+  - type: ContainerContainer
+    containers:
+      torch_slot: !type:ContainerSlot
+  - type: PointLight
+    enabled: false
+    color: "#da8c45"
+    radius: 6
+    energy: 2
+
+- type: entity
+  parent: RogueTownWallTorchHolder
+  id: RogueTownWallTorchHolderEmpty
+  abstract: true
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      torch_slot:
+        insertOnInteract: true
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - RogueTownTorch
+
+- type: entity
+  parent: RogueTownWallTorchHolder
+  id: RogueTownWallTorchHolderNorth
+  name: wall torch holder (north)
+  placement:
+    mode: RogueTownWallmountNorth
+    snap:
+    - Wallmount
+
+- type: entity
+  parent: RogueTownWallTorchHolder
+  id: RogueTownWallTorchHolderSouth
+  name: wall torch holder (south)
+  placement:
+    mode: RogueTownWallmountSouth
+    snap:
+    - Wallmount
+
+- type: entity
+  parent: RogueTownWallTorchHolder
+  id: RogueTownWallTorchHolderEast
+  name: wall torch holder (east)
+  placement:
+    mode: RogueTownWallmountEast
+    snap:
+    - Wallmount
+
+- type: entity
+  parent: RogueTownWallTorchHolder
+  id: RogueTownWallTorchHolderWest
+  name: wall torch holder (west)
+  placement:
+    mode: RogueTownWallmountWest
+    snap:
+    - Wallmount
+
+- type: entity
+  parent: BaseStructure
+  id: RogueTownStoneFire
+  name: stone brazier
+  categories: [ ForkFiltered ]
+  description: A heavy stone brazier. An empty hand can snuff it, and a lit torch can relight it.
+  components:
+  - type: RogueTownStoneFire
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Lighting/rogue_lighting.rsi
+    layers:
+    - state: stonefire1
+      map: [ "fire" ]
+  - type: Icon
+    sprite: _Baseline/RogueTown/Lighting/rogue_lighting.rsi
+    state: stonefire1
+  - type: ItemToggle
+    activated: true
+    onUse: false
+    onActivate: false
+    predictable: false
+  - type: ItemTogglePointLight
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        fire:
+          True: { state: stonefire1 }
+          False: { state: stonefire0 }
+  - type: PointLight
+    enabled: true
+    color: "#f9ad80"
+    radius: 7
+    energy: 2
+
+- type: entity
+  parent: RogueTownStoneFire
+  id: RogueTownStoneFireUnlit
+  suffix: Unlit
+  components:
+  - type: ItemToggle
+    activated: false
+  - type: PointLight
+    enabled: false
+  - type: Sprite
+    layers:
+    - state: stonefire0
+      map: [ "fire" ]
+  - type: Icon
+    state: stonefire0
