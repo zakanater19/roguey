@@ -39,6 +39,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         {"back", "BACKPACK"},
         {"belt", "BELT"},
         {"gloves", "HAND"},
+        {"pants", "LEGS"},
         {"shoes", "FEET"},
         {"id", "IDCARD"},
         {"pocket1", "POCKET1"},

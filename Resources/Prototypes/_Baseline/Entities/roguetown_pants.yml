@@ -1,0 +1,13 @@
+- type: entity
+  parent: Clothing
+  id: ClothingPantsRogueTights1
+  name: tights
+  categories: [ ForkFiltered ]
+  description: A pair of simple cloth tights.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Clothing/Pants/tights1.rsi
+    state: icon
+  - type: Clothing
+    slots: [ legs ]
+    sprite: _Baseline/RogueTown/Clothing/Pants/tights1.rsi
