@@ -31,14 +31,30 @@ public sealed class LightCycleSystem : SharedLightCycleSystem
             // it apply the server state
             var pausedTime = _metadata.GetPauseTime(uid);
 
-            var time = (float) _timing.CurTime
-                .Add(cycle.Offset)
-                .Subtract(_ticker.RoundStartTimeSpan)
-                .Subtract(pausedTime)
-                .TotalSeconds;
+            var roundTime = _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan);
+            var time = GetElapsedSeconds(cycle, roundTime, pausedTime);
 
             var color = GetColor((uid, cycle), cycle.OriginalColor, time);
             map.AmbientLightColor = color;
         }
+    }
+
+    public bool TryGetCalendarTime(out DayNightCalendarTime calendar)
+    {
+        var query = AllEntityQuery<LightCycleComponent>();
+        while (query.MoveNext(out var uid, out var cycle))
+        {
+            if (!cycle.Running || !cycle.Enabled)
+                continue;
+
+            var pausedTime = _metadata.GetPauseTime(uid);
+            var roundTime = _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan);
+            var elapsed = GetElapsedSeconds(cycle, roundTime, pausedTime);
+            calendar = GetCalendarTime(cycle, elapsed);
+            return true;
+        }
+
+        calendar = default;
+        return false;
     }
 }

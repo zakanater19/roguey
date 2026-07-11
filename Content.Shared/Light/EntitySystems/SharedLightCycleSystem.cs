@@ -5,6 +5,8 @@ namespace Content.Shared.Light.EntitySystems;
 
 public abstract class SharedLightCycleSystem : EntitySystem
 {
+    public static readonly TimeSpan CalendarStartTime = new(6, 12, 0);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -39,20 +41,78 @@ public abstract class SharedLightCycleSystem : EntitySystem
         Dirty(entity);
     }
 
-    public static Color GetColor(Entity<LightCycleComponent> cycle, Color color, float time)
+    public static Color GetColor(Entity<LightCycleComponent> cycle, Color color, double time)
     {
-        if (cycle.Comp.Enabled)
+        if (!cycle.Comp.Enabled)
+            return color;
+
+        var duration = Math.Max(1d, cycle.Comp.Duration.TotalSeconds);
+        var dayDuration = Math.Clamp(cycle.Comp.DayDuration.TotalSeconds, 0d, duration);
+        var transition = Math.Clamp(cycle.Comp.TransitionDuration.TotalSeconds,
+            0d,
+            Math.Min(dayDuration, duration - dayDuration));
+        var cycleTime = Mod(time, duration);
+
+        if (transition <= 0d)
+            return cycleTime < dayDuration ? color : cycle.Comp.NightColor;
+
+        if (cycleTime < dayDuration - transition)
+            return color;
+
+        if (cycleTime < dayDuration)
         {
-            var lightLevel = CalculateLightLevel(cycle.Comp, time);
-            var colorLevel = CalculateColorLevel(cycle.Comp, time);
-            return new Color(
-                (byte)Math.Min(255, color.RByte * colorLevel.R * lightLevel),
-                (byte)Math.Min(255, color.GByte * colorLevel.G * lightLevel),
-                (byte)Math.Min(255, color.BByte * colorLevel.B * lightLevel)
-            );
+            var progress = (float) ((cycleTime - (dayDuration - transition)) / transition);
+            return Color.InterpolateBetween(color, cycle.Comp.NightColor, SmoothStep(progress));
         }
 
-        return color;
+        if (cycleTime < duration - transition)
+            return cycle.Comp.NightColor;
+
+        var dawnProgress = (float) ((cycleTime - (duration - transition)) / transition);
+        return Color.InterpolateBetween(cycle.Comp.NightColor, color, SmoothStep(dawnProgress));
+    }
+
+    public static double GetElapsedSeconds(LightCycleComponent cycle, TimeSpan roundTime, TimeSpan pausedTime)
+    {
+        return (roundTime - pausedTime).TotalSeconds * cycle.TimeScale + cycle.Offset.TotalSeconds;
+    }
+
+    public static DayNightCalendarTime GetCalendarTime(LightCycleComponent cycle, double elapsedSeconds)
+    {
+        var duration = Math.Max(1d, cycle.Duration.TotalSeconds);
+        var cycleTime = Mod(elapsedSeconds, duration);
+        var worldDaySeconds = TimeSpan.FromDays(1).TotalSeconds;
+        var absoluteWorldSeconds = CalendarStartTime.TotalSeconds + elapsedSeconds / duration * worldDaySeconds;
+        var day = Math.Max(1, (int) Math.Floor(absoluteWorldSeconds / worldDaySeconds) + 1);
+
+        // A complete forty-minute cycle represents a full in-world day. Starting at 06:12 means the
+        // two-minute dawn fade begins at 05:00 and has just completed when a new day starts.
+        var secondsSinceMidnight = Mod(CalendarStartTime.TotalSeconds +
+            cycleTime / duration * worldDaySeconds,
+            worldDaySeconds);
+
+        return new DayNightCalendarTime(day,
+            TimeSpan.FromSeconds(secondsSinceMidnight),
+            cycleTime < cycle.DayDuration.TotalSeconds);
+    }
+
+    public static double GetElapsedSecondsForCalendarTime(LightCycleComponent cycle, int day, TimeSpan timeOfDay)
+    {
+        var worldDaySeconds = TimeSpan.FromDays(1).TotalSeconds;
+        var absoluteWorldSeconds = (day - 1) * worldDaySeconds + timeOfDay.TotalSeconds;
+        return (absoluteWorldSeconds - CalendarStartTime.TotalSeconds) /
+            worldDaySeconds * Math.Max(1d, cycle.Duration.TotalSeconds);
+    }
+
+    private static float SmoothStep(float value)
+    {
+        value = Math.Clamp(value, 0f, 1f);
+        return value * value * (3f - 2f * value);
+    }
+
+    public static double Mod(double value, double modulus)
+    {
+        return (value % modulus + modulus) % modulus;
     }
 
     /// <summary>
@@ -132,3 +192,5 @@ public record struct LightCycleOffsetEvent(TimeSpan Offset)
 {
     public readonly TimeSpan Offset = Offset;
 }
+
+public readonly record struct DayNightCalendarTime(int Day, TimeSpan TimeOfDay, bool IsDay);

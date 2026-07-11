@@ -34,6 +34,9 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
+    - type: MapLight
+      ambientLightColor: '#D0D0D0FF'
+    - type: LightCycle
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
@@ -89,6 +92,7 @@ entities:
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
+    - type: Roof
     - type: GridPathfinding
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier

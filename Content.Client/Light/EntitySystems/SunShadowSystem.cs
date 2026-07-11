@@ -29,11 +29,21 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
 
             var pausedTime = _metadata.GetPauseTime(uid);
 
-            var time = (float)(_timing.CurTime
-                .Add(cycle.Offset)
-                .Subtract(_ticker.RoundStartTimeSpan)
-                .Subtract(pausedTime)
-                .TotalSeconds % cycle.Duration.TotalSeconds);
+            float time;
+            if (TryComp(uid, out LightCycleComponent? lightCycle))
+            {
+                var roundTime = _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan);
+                time = (float) (SharedLightCycleSystem.GetElapsedSeconds(lightCycle, roundTime, pausedTime) %
+                    cycle.Duration.TotalSeconds);
+            }
+            else
+            {
+                time = (float) (_timing.CurTime
+                    .Add(cycle.Offset)
+                    .Subtract(_ticker.RoundStartTimeSpan)
+                    .Subtract(pausedTime)
+                    .TotalSeconds % cycle.Duration.TotalSeconds);
+            }
 
             var (direction, alpha) = GetShadow((uid, cycle), time);
             shadow.Direction = direction;

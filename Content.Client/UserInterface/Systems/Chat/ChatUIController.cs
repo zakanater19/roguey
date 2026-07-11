@@ -9,6 +9,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Light;
 using Content.Client.Mind;
 using Content.Client.Roles;
 using Content.Client.Stylesheets;
@@ -66,6 +67,7 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
+    [UISystemDependency] private readonly LightCycleSystem? _lightCycle = default;
 
     private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
@@ -590,7 +592,20 @@ public sealed partial class ChatUIController : UIController
 
     public override void FrameUpdate(FrameEventArgs delta)
     {
+        UpdateDayNightStatus();
         UpdateQueuedSpeechBubbles(delta);
+    }
+
+    private void UpdateDayNightStatus()
+    {
+        if (_lightCycle?.TryGetCalendarTime(out var calendar) != true)
+            return;
+
+        foreach (var chat in _chats)
+        {
+            if (chat.Main)
+                chat.UpdateStatus(calendar);
+        }
     }
 
     private void UpdateQueuedSpeechBubbles(FrameEventArgs delta)

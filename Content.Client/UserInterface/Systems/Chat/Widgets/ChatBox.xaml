@@ -10,6 +10,14 @@
     <PanelContainer Name="ChatWindowPanel" Access="Public" HorizontalExpand="True" VerticalExpand="True"
                     StyleClasses="StyleNano.StyleClassChatPanel">
         <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True" VerticalExpand="True">
+            <TabContainer Name="StatusTabs" Access="Public" HorizontalExpand="True" MinHeight="92" Visible="False">
+                <PanelContainer HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="8 4 8 6" SeparationOverride="2">
+                        <Label Name="DayLabel" Access="Public" Text="Day: 1" />
+                        <Label Name="TimeLabel" Access="Public" Text="Time: 06:12" />
+                    </BoxContainer>
+                </PanelContainer>
+            </TabContainer>
             <OutputPanel Name="Contents" HorizontalExpand="True" VerticalExpand="True" Margin="8 8 8 4" ShowScrollDownButton="True" />
             <controls:ChatInputBox HorizontalExpand="True" Name="ChatInput" Access="Public" Margin="2"/>
         </BoxContainer>

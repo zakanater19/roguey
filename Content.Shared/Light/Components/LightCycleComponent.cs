@@ -16,10 +16,29 @@ public sealed partial class LightCycleComponent : Component
     /// How long an entire cycle lasts
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan Duration = TimeSpan.FromMinutes(30);
+    public TimeSpan Duration = TimeSpan.FromMinutes(40);
+
+    /// <summary>
+    /// How long daylight lasts before night begins.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    // The cycle starts at 06:12. 24:40 later is 21:00, when dusk begins.
+    public TimeSpan DayDuration = TimeSpan.FromMinutes(24) + TimeSpan.FromSeconds(40);
+
+    /// <summary>
+    /// The final part of day/night used to fade into the next phase.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan TransitionDuration = TimeSpan.FromMinutes(2);
 
     [DataField, AutoNetworkedField]
     public TimeSpan Offset;
+
+    /// <summary>
+    /// Multiplier applied to the passage of round time.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int TimeScale = 1;
 
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
@@ -28,7 +47,13 @@ public sealed partial class LightCycleComponent : Component
     /// Should the offset be randomised upon MapInit.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool InitialOffset = true;
+    public bool InitialOffset = false;
+
+    /// <summary>
+    /// Ambient light at night. The original map light color is used for daytime.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Color NightColor = Color.Black;
 
     /// <summary>
     /// Trench of the oscillation.
