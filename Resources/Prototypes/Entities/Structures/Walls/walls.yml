@@ -9,6 +9,7 @@
     snap:
     - Wall
   components:
+  - type: RogueTownAlwaysAnchored
   - type: Anchorable
     flags:
     - Anchorable

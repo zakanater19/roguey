@@ -17,17 +17,14 @@
         roguetown_tree01: ""
   - type: RogueTownMiningWall
     requiredToolTag: Axe
+    alternativeToolTag: Sword
+    toolDamage: 200
+    alternativeToolDamage: 133.34
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+        damage: 1000
       behaviors:
       - !type:PlaySoundBehavior
         sound:

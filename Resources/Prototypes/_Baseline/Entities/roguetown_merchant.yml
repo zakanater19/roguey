@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseStructure
+  id: RogueTownMerchantVendor
+  name: merchant vendor
+  categories: [ ForkFiltered ]
+  description: An ornate gold-faced merchant machine. Its trading mechanisms are not yet functional.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+    flags: None
+  - type: RogueTownAlwaysAnchored
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Structures/merchant_vendor.rsi
+    state: goldvendor
+  - type: Icon
+    sprite: _Baseline/RogueTown/Structures/merchant_vendor.rsi
+    state: goldvendor
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6

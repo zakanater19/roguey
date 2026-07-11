@@ -8,6 +8,7 @@
     snap:
     - Window
   components:
+  - type: RogueTownAlwaysAnchored
   - type: Anchorable
     flags:
     - Anchorable
@@ -134,6 +135,7 @@
     snap:
     - Window
   components:
+  - type: RogueTownAlwaysAnchored
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag

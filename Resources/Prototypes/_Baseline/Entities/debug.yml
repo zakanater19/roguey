@@ -4,6 +4,12 @@
   categories: [ ForkFiltered ]
 
 - type: entity
+  parent: MobHuman
+  id: BaselineHumanDummy
+  name: Urist McHands
+  categories: [ ForkFiltered ]
+
+- type: entity
   parent: WallSolid
   id: BaselineWall
   categories: [ ForkFiltered ]

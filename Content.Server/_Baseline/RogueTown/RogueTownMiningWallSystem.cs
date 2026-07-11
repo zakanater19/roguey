@@ -38,19 +38,33 @@ public sealed class RogueTownMiningWallSystem : EntitySystem
             return;
         }
 
-        var validTool = _tag.HasTag(origin, component.RequiredToolTag);
+        var primaryTool = _tag.HasTag(origin, component.RequiredToolTag);
+        var alternativeTool = component.AlternativeToolTag is { } alternativeTag &&
+                              _tag.HasTag(origin, alternativeTag);
         EntityUid? heldTool = null;
 
         if (_hands.TryGetActiveItem((origin, CompOrNull<HandsComponent>(origin)), out var held))
         {
             heldTool = held.Value;
-            validTool |= _tag.HasTag(held.Value, component.RequiredToolTag);
+            primaryTool |= _tag.HasTag(held.Value, component.RequiredToolTag);
+            alternativeTool |= component.AlternativeToolTag is { } heldAlternativeTag &&
+                               _tag.HasTag(held.Value, heldAlternativeTag);
         }
 
-        if (!validTool)
+        if (!primaryTool && !alternativeTool)
         {
             args.Cancelled = true;
             return;
+        }
+
+        var normalizedDamage = primaryTool
+            ? component.ToolDamage
+            : component.AlternativeToolDamage;
+
+        if (normalizedDamage is { } damage)
+        {
+            args.Damage.DamageDict.Clear();
+            args.Damage.DamageDict["Structural"] = damage;
         }
 
         if (args.Damage.GetTotal() > 0)

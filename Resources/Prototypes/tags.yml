@@ -566,6 +566,9 @@
   id: Axe
 
 - type: Tag
+  id: Sword
+
+- type: Tag
   id: FireAxe # Storage whitelist: FireAxeCabinet
 
 - type: Tag

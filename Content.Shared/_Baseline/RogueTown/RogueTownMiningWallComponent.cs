@@ -11,6 +11,21 @@ public sealed partial class RogueTownMiningWallComponent : Component
     public ProtoId<TagPrototype> RequiredToolTag = "Pickaxe";
 
     [DataField]
+    public ProtoId<TagPrototype>? AlternativeToolTag;
+
+    /// <summary>
+    /// Optional damage applied by the required tool before structural resistances.
+    /// </summary>
+    [DataField]
+    public float? ToolDamage;
+
+    /// <summary>
+    /// Optional damage applied by the alternative tool before structural resistances.
+    /// </summary>
+    [DataField]
+    public float? AlternativeToolDamage;
+
+    [DataField]
     public float StaminaCost = 5f;
 
     [DataField]

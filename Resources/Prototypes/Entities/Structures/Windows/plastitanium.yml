@@ -9,6 +9,7 @@
     snap:
     - Window
   components:
+  - type: RogueTownAlwaysAnchored
   - type: RCDDeconstructable
     deconstructable: false
   - type: MeleeSound

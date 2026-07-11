@@ -5,6 +5,11 @@
   categories: [ ForkFiltered ]
   description: A stone smelter for turning ore into workable metal.
   components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+    flags: None
+  - type: RogueTownAlwaysAnchored
   - type: Sprite
     sprite: _Baseline/RogueTown/Structures/smelter.rsi
     layers:
