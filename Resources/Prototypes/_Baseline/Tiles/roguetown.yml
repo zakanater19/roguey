@@ -78,3 +78,33 @@
   sprite: /Textures/_Baseline/Tiles/RogueTown/grass.png
   footstepSounds:
     collection: FootstepGrass
+
+- type: tile
+  id: FloorRogueTownWater
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-water
+  sprite: /Textures/_Baseline/Tiles/RogueTown/water.png
+  footstepSounds:
+    collection: FootstepWater
+
+- type: tile
+  id: FloorRogueTownYuckwater
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-yuckwater
+  sprite: /Textures/_Baseline/Tiles/RogueTown/yuckwater.png
+  footstepSounds:
+    collection: FootstepWater
+
+- type: tile
+  id: FloorRogueTownCobblerock
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-cobblerock
+  sprite: /Textures/_Baseline/Tiles/RogueTown/cobblerock.png
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorRogueTownDebug
+  parent: BaseRogueTownTile
+  name: tiles-roguetown-debug
+  sprite: /Textures/_Baseline/Tiles/RogueTown/debug.png

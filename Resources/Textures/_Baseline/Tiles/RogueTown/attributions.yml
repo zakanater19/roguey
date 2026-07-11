@@ -9,6 +9,17 @@
   - paved_stone.png
   - road.png
   - grass.png
+  - water.png
+  - yuckwater.png
+  - cobblerock.png
+  - water_animated.rsi/together.png
+  - yuckwater_animated.rsi/together.png
   license: "CC-BY-SA-3.0"
   copyright: "Extracted and adapted from the local RogueTown reference sprite pack."
   source: "https://github.com/SS13-Special-Codebases-Archive/RogueTown"
+
+- files:
+  - debug.png
+  license: "CC0-1.0"
+  copyright: "Created for the Baseline project as a procgen debug tile."
+  source: "https://github.com/SS14Baseline/Station14"
