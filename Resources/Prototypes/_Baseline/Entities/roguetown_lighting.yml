@@ -137,9 +137,15 @@
     snap:
     - Wallmount
   components:
+  - type: RogueTownTorchHolder
+    southFacing: true
+  # RogueTown keeps this entity on the floor tile below and draws it 32 pixels up onto the wall.
+  - type: Sprite
+    offset: 0,1
   - type: PointLight
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+    offset: 0,1
 
 - type: entity
   parent: RogueTownWallTorchHolder

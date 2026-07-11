@@ -30,8 +30,8 @@ public abstract class RogueTownWallmountPlacement : PlacementMode
             // North/south states are centered horizontally and belong on the wall edge.
             // East/west states contain their own horizontal edge offset and stay in the adjacent tile.
             Direction.North => new Vector2(0.5f, 1f),
-            // The south-facing source state reaches toward the tile's upper edge.
-            Direction.South => new Vector2(0.5f, 0.49f),
+            // Place on the selected floor tile; the sprite's top edge hugs the wall tile above it.
+            Direction.South => new Vector2(0.5f, 0.5f),
             Direction.East => new Vector2(1.5f, 0.5f),
             Direction.West => new Vector2(-0.5f, 0.5f),
             _ => Vector2.Zero

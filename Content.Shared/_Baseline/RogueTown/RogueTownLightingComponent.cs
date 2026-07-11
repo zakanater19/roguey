@@ -12,6 +12,9 @@ public sealed partial class RogueTownTorchHolderComponent : Component
 {
     [DataField]
     public string Slot = "torch_slot";
+
+    [DataField]
+    public bool SouthFacing;
 }
 
 [RegisterComponent]

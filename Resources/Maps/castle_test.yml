@@ -4,8 +4,8 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/10/2026 20:06:37
-  entityCount: 209
+  time: 07/11/2026 07:27:18
+  entityCount: 213
 maps:
 - 1
 grids:
@@ -222,7 +222,7 @@ entities:
       containers:
       - food
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       angularDamping: 8
       linearDamping: 8
@@ -251,7 +251,7 @@ entities:
       containers:
       - food
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: ContainerContainer
@@ -277,7 +277,7 @@ entities:
       containers:
       - food
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: ContainerContainer
@@ -296,7 +296,7 @@ entities:
       containers:
       - food
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: ContainerContainer
@@ -311,7 +311,7 @@ entities:
       pos: -1.2108161,-0.16558439
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: Forensics
@@ -333,7 +333,7 @@ entities:
       containers:
       - food
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: ContainerContainer
@@ -358,7 +358,7 @@ entities:
       containers:
       - food
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: ContainerContainer
@@ -411,7 +411,7 @@ entities:
       pos: -1.4988205,-1.208333
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
 - proto: RogueCoinGold14
@@ -422,7 +422,7 @@ entities:
       pos: -2.3329813,-0.62499905
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
 - proto: RogueCoinGold2
@@ -433,7 +433,7 @@ entities:
       pos: -2.8543322,0.20833397
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
 - proto: RogueIronArmingSword
@@ -444,10 +444,10 @@ entities:
       pos: -0.34282926,1.5002195
       parent: 2
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
       swingLeft: True
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       angularDamping: 8
       linearDamping: 8
@@ -468,7 +468,7 @@ entities:
       pos: -0.8637357,1.7086102
       parent: 2
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: UseDelay
       delays:
         default:
@@ -476,7 +476,7 @@ entities:
           startTime: 0
           length: 1
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: Forensics
@@ -493,7 +493,7 @@ entities:
       pos: -2.6788666,-5.204866
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 26
@@ -502,7 +502,7 @@ entities:
       pos: -2.3976164,-5.4704847
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
 - proto: RogueTownIronOre
@@ -513,7 +513,7 @@ entities:
       pos: -2.5851166,-6.2517347
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 28
@@ -522,7 +522,7 @@ entities:
       pos: -2.3507414,-6.4392343
       parent: 2
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
 - proto: RogueTownPlankWall
@@ -719,308 +719,308 @@ entities:
     - type: Transform
       pos: -8.5,9.5
       parent: 2
-  - uid: 159
-    components:
-    - type: Transform
-      anchored: False
-      rot: 0.0046225301921367645 rad
-      pos: -2.5619488,10.551654
-      parent: 1
-  - uid: 160
-    components:
-    - type: Transform
-      anchored: False
-      rot: 0.0046225301921367645 rad
-      pos: -2.5665715,11.551643
-      parent: 1
-  - uid: 161
-    components:
-    - type: Transform
-      anchored: False
-      rot: 0.0046225301921367645 rad
-      pos: -1.5619595,10.556276
-      parent: 1
-  - uid: 162
-    components:
-    - type: Transform
-      anchored: False
-      rot: 0.0046225301921367645 rad
-      pos: -1.5665821,11.556266
-      parent: 1
   - uid: 163
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -1.5619595,10.556276
+      pos: -2.5619488,10.551654
       parent: 1
   - uid: 164
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -1.5665821,11.556266
+      pos: -2.5665715,11.551643
       parent: 1
   - uid: 165
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -1.5712045,12.556254
+      pos: -1.5619595,10.556276
       parent: 1
   - uid: 166
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -1.5758271,13.556244
+      pos: -1.5665821,11.556266
       parent: 1
   - uid: 167
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -1.5804496,14.556233
+      pos: -1.5619595,10.556276
       parent: 1
   - uid: 168
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -2.5619488,10.551654
+      pos: -1.5665821,11.556266
       parent: 1
   - uid: 169
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -2.5665715,11.551643
+      pos: -1.5712045,12.556254
       parent: 1
   - uid: 170
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -2.571194,12.551632
+      pos: -1.5758271,13.556244
       parent: 1
   - uid: 171
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -2.5758164,13.551621
+      pos: -1.5804496,14.556233
       parent: 1
   - uid: 172
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -2.5804389,14.551611
+      pos: -2.5619488,10.551654
       parent: 1
   - uid: 173
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -3.5619383,10.547031
+      pos: -2.5665715,11.551643
       parent: 1
   - uid: 174
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -3.5665607,11.54702
+      pos: -2.571194,12.551632
       parent: 1
   - uid: 175
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -3.5711832,12.547009
+      pos: -2.5758164,13.551621
       parent: 1
   - uid: 176
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -3.5758057,13.546999
+      pos: -2.5804389,14.551611
       parent: 1
   - uid: 177
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -3.5804281,14.5469885
+      pos: -3.5619383,10.547031
       parent: 1
   - uid: 178
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -4.5619273,10.542409
+      pos: -3.5665607,11.54702
       parent: 1
   - uid: 179
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -4.56655,11.5423975
+      pos: -3.5711832,12.547009
       parent: 1
   - uid: 180
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -4.5711727,12.542387
+      pos: -3.5758057,13.546999
       parent: 1
   - uid: 181
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -4.575795,13.5423765
+      pos: -3.5804281,14.5469885
       parent: 1
   - uid: 182
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -4.5804176,14.542366
+      pos: -4.5619273,10.542409
       parent: 1
   - uid: 183
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -5.561917,10.5377865
+      pos: -4.56655,11.5423975
       parent: 1
   - uid: 184
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -5.5665393,11.537775
+      pos: -4.5711727,12.542387
       parent: 1
   - uid: 185
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -5.5711617,12.537765
+      pos: -4.575795,13.5423765
       parent: 1
   - uid: 186
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -5.575784,13.537754
+      pos: -4.5804176,14.542366
       parent: 1
   - uid: 187
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -5.5804067,14.537744
+      pos: -5.561917,10.5377865
       parent: 1
   - uid: 188
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -6.5619063,10.533163
+      pos: -5.5665393,11.537775
       parent: 1
   - uid: 189
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -6.566529,11.533153
+      pos: -5.5711617,12.537765
       parent: 1
   - uid: 190
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -6.5711513,12.533142
+      pos: -5.575784,13.537754
       parent: 1
   - uid: 191
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -6.5757737,13.533132
+      pos: -5.5804067,14.537744
       parent: 1
   - uid: 192
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -6.580396,14.533121
+      pos: -6.5619063,10.533163
       parent: 1
   - uid: 193
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -7.5618954,10.528541
+      pos: -6.566529,11.533153
       parent: 1
   - uid: 194
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -7.566518,11.52853
+      pos: -6.5711513,12.533142
       parent: 1
   - uid: 195
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -7.5711403,12.52852
+      pos: -6.5757737,13.533132
       parent: 1
   - uid: 196
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -7.5757627,13.528509
+      pos: -6.580396,14.533121
       parent: 1
   - uid: 197
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -7.5803857,14.528499
+      pos: -7.5618954,10.528541
       parent: 1
   - uid: 198
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -8.561885,10.523918
+      pos: -7.566518,11.52853
       parent: 1
   - uid: 199
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -8.566507,11.523908
+      pos: -7.5711403,12.52852
       parent: 1
   - uid: 200
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -8.57113,12.523897
+      pos: -7.5757627,13.528509
       parent: 1
   - uid: 201
     components:
     - type: Transform
       anchored: False
       rot: 0.0046225301921367645 rad
-      pos: -8.575752,13.523887
+      pos: -7.5803857,14.528499
       parent: 1
   - uid: 202
+    components:
+    - type: Transform
+      anchored: False
+      rot: 0.0046225301921367645 rad
+      pos: -8.561885,10.523918
+      parent: 1
+  - uid: 203
+    components:
+    - type: Transform
+      anchored: False
+      rot: 0.0046225301921367645 rad
+      pos: -8.566507,11.523908
+      parent: 1
+  - uid: 204
+    components:
+    - type: Transform
+      anchored: False
+      rot: 0.0046225301921367645 rad
+      pos: -8.57113,12.523897
+      parent: 1
+  - uid: 205
+    components:
+    - type: Transform
+      anchored: False
+      rot: 0.0046225301921367645 rad
+      pos: -8.575752,13.523887
+      parent: 1
+  - uid: 206
     components:
     - type: Transform
       anchored: False
@@ -1101,7 +1101,7 @@ entities:
     - type: Transform
       pos: 10.5,-3.5
       parent: 2
-  - uid: 203
+  - uid: 207
     components:
     - type: Transform
       anchored: False
@@ -1109,7 +1109,7 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Dynamic
-  - uid: 204
+  - uid: 208
     components:
     - type: Transform
       anchored: False
@@ -1117,7 +1117,7 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Dynamic
-  - uid: 205
+  - uid: 209
     components:
     - type: Transform
       anchored: False
@@ -1125,7 +1125,7 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Dynamic
-  - uid: 206
+  - uid: 210
     components:
     - type: Transform
       anchored: False
@@ -1152,7 +1152,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.6906,19.472815
+      pos: 11.69089,19.474298
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1195,7 +1195,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 10.675747,19.477392
+      pos: 10.676013,19.478874
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1204,7 +1204,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.589465,16.432842
+      pos: 11.589459,16.434074
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1213,7 +1213,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.584786,15.420561
+      pos: 11.584781,15.421542
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1222,7 +1222,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.5801115,14.408662
+      pos: 11.580105,14.409282
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1231,7 +1231,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.575436,13.396994
+      pos: 11.575427,13.397173
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1240,7 +1240,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.598824,18.458881
+      pos: 11.59882,18.46034
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1249,7 +1249,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 11.59415,17.445604
+      pos: 11.594148,17.446987
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1258,7 +1258,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 8.645906,19.396812
+      pos: 8.646077,19.3968
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1267,7 +1267,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 9.660576,19.392138
+      pos: 9.660798,19.392113
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1276,7 +1276,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 6.616722,19.40616
+      pos: 6.6167665,19.406136
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1285,7 +1285,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 7.6312966,19.401512
+      pos: 7.6314063,19.401487
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1294,7 +1294,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.48259896,10.367088
+      pos: 0.48259884,10.367064
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1303,7 +1303,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.4867592,11.382072
+      pos: 0.48675895,11.382053
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1312,7 +1312,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 3.572961,19.42026
+      pos: 3.5728211,19.420235
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1321,7 +1321,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 4.5875783,19.415567
+      pos: 4.587495,19.415556
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1330,7 +1330,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 5.6021576,19.410881
+      pos: 5.6021357,19.410856
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1339,7 +1339,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 1.5435364,19.429636
+      pos: 1.5433155,19.429619
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1348,7 +1348,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 2.5582857,19.424948
+      pos: 2.5580995,19.424923
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1357,7 +1357,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.52892727,19.501772
+      pos: 0.5286967,19.501787
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1366,7 +1366,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.5242154,18.486797
+      pos: 0.5239877,18.48681
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1380,7 +1380,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.58951586,16.456522
+      pos: 0.58951586,16.456526
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1389,7 +1389,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.5942069,17.471487
+      pos: 0.5942069,17.47149
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1398,7 +1398,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.5801313,14.426611
+      pos: 0.5801312,14.426603
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1407,7 +1407,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.58482414,15.441567
+      pos: 0.58482414,15.4415655
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1416,7 +1416,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.57074755,12.396677
+      pos: 0.57074726,12.396664
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1425,7 +1425,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: 0.5754395,13.411647
+      pos: 0.5754394,13.411637
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1482,7 +1482,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.0046225301921367645 rad
-      pos: -1.4829326,-9.54763
+      pos: -1.4829128,-9.54763
       parent: 2
     - type: Physics
       bodyType: Dynamic
@@ -1494,7 +1494,7 @@ entities:
       pos: -5.494099,-9.536605
       parent: 2
     - type: Physics
-      sleepTime: 98.10636
+      sleepTime: 69.033485
       bodyType: Dynamic
   - uid: 128
     components:
@@ -1504,7 +1504,7 @@ entities:
       pos: -4.5069447,-9.671278
       parent: 2
     - type: Physics
-      sleepTime: 98.10636
+      sleepTime: 69.033485
       bodyType: Dynamic
   - uid: 129
     components:
@@ -1530,12 +1530,12 @@ entities:
       anchored: False
       pos: -6.5,-6.5
       parent: 2
-  - uid: 207
+  - uid: 211
     components:
     - type: Transform
       anchored: False
       rot: 3.105960786342621E-05 rad
-      pos: -0.43489578,-9.500114
+      pos: -0.43486682,-9.500114
       parent: 1
     - type: Physics
       bodyType: Dynamic
@@ -1547,9 +1547,9 @@ entities:
       pos: -0.2648576,-0.23837952
       parent: 2
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: Forensics
@@ -1567,9 +1567,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 137
@@ -1579,9 +1579,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 139
@@ -1591,9 +1591,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 141
@@ -1603,9 +1603,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 143
@@ -1615,9 +1615,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 145
@@ -1627,9 +1627,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 147
@@ -1639,9 +1639,9 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
   - uid: 149
@@ -1651,21 +1651,45 @@ entities:
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
-  - uid: 209
+  - uid: 160
     components:
     - type: Transform
-      parent: 208
+      parent: 159
     - type: PointLight
       enabled: True
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
+    - type: Physics
+      canCollide: False
+  - uid: 162
+    components:
+    - type: Transform
+      parent: 161
+    - type: PointLight
+      enabled: True
+    - type: MeleeWeapon
+      nextAttack: -69.0338394
+    - type: EmitSoundOnCollide
+      nextSound: -69.0338394
+    - type: Physics
+      canCollide: False
+  - uid: 213
+    components:
+    - type: Transform
+      parent: 212
+    - type: PointLight
+      enabled: True
+    - type: MeleeWeapon
+      nextAttack: -69.0338394
+    - type: EmitSoundOnCollide
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
 - proto: RogueTownWallTorchHolderEast
@@ -1752,7 +1776,7 @@ entities:
           ent: 149
     - type: Fixtures
       fixtures: {}
-  - uid: 208
+  - uid: 212
     components:
     - type: Transform
       anchored: False
@@ -1766,7 +1790,39 @@ entities:
         torch_slot: !type:ContainerSlot
           showEnts: False
           occludes: True
-          ent: 209
+          ent: 213
+    - type: Fixtures
+      fixtures: {}
+- proto: RogueTownWallTorchHolderSouth
+  entities:
+  - uid: 159
+    components:
+    - type: Transform
+      pos: 4.5,9.5
+      parent: 2
+    - type: PointLight
+      enabled: True
+    - type: ContainerContainer
+      containers:
+        torch_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: 160
+    - type: Fixtures
+      fixtures: {}
+  - uid: 161
+    components:
+    - type: Transform
+      pos: 7.5,9.5
+      parent: 2
+    - type: PointLight
+      enabled: True
+    - type: ContainerContainer
+      containers:
+        torch_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: 162
     - type: Fixtures
       fixtures: {}
 - proto: RogueTownWallTorchHolderWest
@@ -1865,7 +1921,7 @@ entities:
       pos: -0.28016585,0.7224507
       parent: 2
     - type: MeleeWeapon
-      nextAttack: -98.0999315
+      nextAttack: -69.0338394
     - type: UseDelay
       delays:
         default:
@@ -1873,7 +1929,7 @@ entities:
           startTime: 0
           length: 1
     - type: EmitSoundOnCollide
-      nextSound: -98.0999315
+      nextSound: -69.0338394
     - type: Physics
       canCollide: False
     - type: Forensics
