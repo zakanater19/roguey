@@ -16,6 +16,9 @@ using Content.Shared.Rounding;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tag;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -32,6 +35,8 @@ namespace Content.Shared.Damage.Systems;
 public abstract partial class SharedStaminaSystem : EntitySystem
 {
     public static readonly EntProtoId StaminaLow = "StatusEffectStaminaLow";
+    private static readonly ProtoId<TagPrototype> AxeTag = "Axe";
+    private static readonly ProtoId<TagPrototype> PickaxeTag = "Pickaxe";
 
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
@@ -43,6 +48,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] protected readonly SharedStunSystem StunSystem = default!;
 
     /// <summary>
@@ -64,6 +70,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<StaminaComponent, ToolUserAttemptUseEvent>(OnToolUserAttemptUse);
+        SubscribeLocalEvent<MeleeWeaponComponent, AttemptMeleeEvent>(OnMeleeAttempt);
 
         SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
 
@@ -124,11 +132,31 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
 
         entity.Comp.StaminaDamage = 0;
+        entity.Comp.Exhausted = false;
         AdjustStatus(entity.Owner);
         RemComp<ActiveStaminaComponent>(entity);
         _status.TryRemoveStatusEffect(entity, StaminaLow);
         UpdateStaminaVisuals(entity);
         Dirty(entity);
+    }
+
+    private void OnToolUserAttemptUse(Entity<StaminaComponent> entity, ref ToolUserAttemptUseEvent args)
+    {
+        if (entity.Comp.Exhausted)
+            args.Cancelled = true;
+    }
+
+    private void OnMeleeAttempt(Entity<MeleeWeaponComponent> weapon, ref AttemptMeleeEvent args)
+    {
+        if (!TryComp<StaminaComponent>(args.User, out var stamina) ||
+            !stamina.Exhausted ||
+            !_tag.HasAnyTag(weapon, AxeTag, PickaxeTag))
+        {
+            return;
+        }
+
+        args.Cancelled = true;
+        args.Message = Loc.GetString("stamina-not-enough");
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
@@ -285,10 +313,19 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             return;
 
         var oldDamage = component.StaminaDamage;
-        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
+        component.StaminaDamage = Math.Clamp(component.StaminaDamage + value, 0f, component.CritThreshold);
+
+        if (!component.CollapseOnExhaustion)
+        {
+            if (component.StaminaDamage >= component.CritThreshold)
+                component.Exhausted = true;
+            else if (component.Exhausted &&
+                     component.StaminaDamage <= component.CritThreshold - component.ExhaustionRecovery)
+                component.Exhausted = false;
+        }
 
         // Reset the decay cooldown upon taking damage.
-        if (oldDamage < component.StaminaDamage)
+        if (oldDamage < component.StaminaDamage || value > 0f && !component.CollapseOnExhaustion)
         {
             var nextUpdate = Timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
 
@@ -309,7 +346,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         if (!component.Critical)
         {
-            if (component.StaminaDamage >= component.CritThreshold)
+            if (component.CollapseOnExhaustion && component.StaminaDamage >= component.CritThreshold)
             {
                 EnterStamCrit(uid, component);
             }
@@ -352,6 +389,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         base.Update(frameTime);
 
         var stamQuery = GetEntityQuery<StaminaComponent>();
+        var combatQuery = GetEntityQuery<CombatModeComponent>();
+        var moverQuery = GetEntityQuery<InputMoverComponent>();
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
         var curTime = Timing.CurTime;
 
@@ -368,6 +407,9 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             // Shouldn't need to consider paused time as we're only iterating non-paused stamina components.
             var nextUpdate = comp.NextUpdate;
 
+            if (combatQuery.TryGetComponent(uid, out var combat) && combat.IsInCombatMode)
+                continue;
+
             if (nextUpdate > curTime)
                 continue;
 
@@ -383,6 +425,38 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                 comp);
 
             Dirty(uid, comp);
+        }
+
+        if (_net.IsClient)
+            return;
+
+        var staminaQuery = EntityQueryEnumerator<StaminaComponent>();
+        while (staminaQuery.MoveNext(out var uid, out var comp))
+        {
+            var inCombat = combatQuery.TryGetComponent(uid, out var combat) && combat.IsInCombatMode;
+            var holdingSprint = moverQuery.TryGetComponent(uid, out var mover) && mover.FastSprinting;
+
+            if (!inCombat && (!holdingSprint || comp.Exhausted))
+            {
+                comp.PassiveDrainAccumulator = 0f;
+                continue;
+            }
+
+            comp.PassiveDrainAccumulator += frameTime;
+            if (comp.PassiveDrainAccumulator < 1f)
+                continue;
+
+            var seconds = MathF.Floor(comp.PassiveDrainAccumulator);
+            comp.PassiveDrainAccumulator -= seconds;
+
+            var drain = 0f;
+            if (inCombat)
+                drain += comp.CombatDrainPerSecond;
+            if (holdingSprint && !comp.Exhausted)
+                drain += comp.SprintDrainPerSecond;
+
+            if (drain > 0f)
+                TakeStaminaDamage(uid, drain * seconds, comp, visual: false);
         }
     }
 

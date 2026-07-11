@@ -563,6 +563,9 @@
   id: FireAlarmElectronics # ConstructionGraph: FireAlarmAssembly
 
 - type: Tag
+  id: Axe
+
+- type: Tag
   id: FireAxe # Storage whitelist: FireAxeCabinet
 
 - type: Tag

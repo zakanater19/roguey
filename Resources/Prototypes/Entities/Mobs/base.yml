@@ -110,6 +110,9 @@
       - !type:VomitBehavior
   - type: RadiationReceiver
   - type: Stamina
+    collapseOnExhaustion: false
+    combatDrainPerSecond: 1
+    sprintDrainPerSecond: 5
   - type: StunVisuals
   - type: MobState
   - type: MobThresholds

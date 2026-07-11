@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
+using Content.Shared.Damage.Components;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
@@ -57,6 +58,7 @@ public abstract partial class SharedMoverController : VirtualController
     protected EntityQuery<MobMoverComponent> MobMoverQuery;
     protected EntityQuery<MovementRelayTargetComponent> RelayTargetQuery;
     protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
+    protected EntityQuery<StaminaComponent> StaminaQuery;
     protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
     protected EntityQuery<PilotComponent> PilotQuery;
@@ -87,6 +89,7 @@ public abstract partial class SharedMoverController : VirtualController
         MoverQuery = GetEntityQuery<InputMoverComponent>();
         MobMoverQuery = GetEntityQuery<MobMoverComponent>();
         ModifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
+        StaminaQuery = GetEntityQuery<StaminaComponent>();
         RelayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
@@ -261,7 +264,7 @@ public abstract partial class SharedMoverController : VirtualController
             var walkSpeed = moveSpeedComponent?.WeightlessWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.WeightlessSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
-            wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
+            wishDir = AssertValidWish((uid, mover), walkSpeed, sprintSpeed);
 
             var ev = new CanWeightlessMoveEvent(uid);
             RaiseLocalEvent(uid, ref ev, true);
@@ -299,7 +302,7 @@ public abstract partial class SharedMoverController : VirtualController
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
-            wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
+            wishDir = AssertValidWish((uid, mover), walkSpeed, sprintSpeed);
 
             if (wishDir != Vector2.Zero)
             {
@@ -637,9 +640,20 @@ public abstract partial class SharedMoverController : VirtualController
         return sound != null;
     }
 
-    private Vector2 AssertValidWish(InputMoverComponent mover, float walkSpeed, float sprintSpeed)
+    private Vector2 AssertValidWish(Entity<InputMoverComponent> entity, float walkSpeed, float sprintSpeed)
     {
+        var mover = entity.Comp;
         var (walkDir, sprintDir) = GetVelocityInput(mover);
+
+        if (StaminaQuery.TryComp(entity, out var stamina) && stamina.Exhausted)
+        {
+            walkDir += sprintDir;
+            sprintDir = Vector2.Zero;
+        }
+        else if (mover.FastSprinting)
+        {
+            sprintSpeed *= 1.5f;
+        }
 
         var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 

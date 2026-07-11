@@ -40,6 +40,7 @@ namespace Content.Shared.Movement.Systems
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
+                .Bind(ContentKeyFunctions.Sprint, new SprintInputCmdHandler(this))
                 .Bind(EngineKeyFunctions.CameraRotateLeft, new CameraRotateInputCmdHandler(this, Direction.East))
                 .Bind(EngineKeyFunctions.CameraRotateRight, new CameraRotateInputCmdHandler(this, Direction.West))
                 .Bind(EngineKeyFunctions.CameraReset, new CameraResetInputCmdHandler(this))
@@ -352,7 +353,7 @@ namespace Content.Shared.Movement.Systems
             entity.Comp.TargetRelativeRotation = Angle.Zero;
         }
 
-        private void HandleRunChange(EntityUid uid, ushort subTick, bool walking)
+        private void HandleRunChange(EntityUid uid, ushort subTick, bool sprinting)
         {
             MoverQuery.TryGetComponent(uid, out var moverComp);
 
@@ -364,13 +365,25 @@ namespace Content.Shared.Movement.Systems
                     SetMoveInput((uid, moverComp), MoveButtons.None);
                 }
 
-                HandleRunChange(relayMover.RelayEntity, subTick, walking);
+                HandleRunChange(relayMover.RelayEntity, subTick, sprinting);
                 return;
             }
 
             if (moverComp == null) return;
 
-            SetSprinting((uid, moverComp), subTick, walking);
+            SetSprinting((uid, moverComp), subTick, sprinting);
+        }
+
+        private void HandleFastSprintChange(EntityUid uid, ushort subTick, bool sprinting)
+        {
+            if (TryComp<RelayInputMoverComponent>(uid, out var relayMover))
+            {
+                HandleFastSprintChange(relayMover.RelayEntity, subTick, sprinting);
+                return;
+            }
+
+            if (MoverQuery.TryGetComponent(uid, out var moverComp))
+                SetMoveInput((uid, moverComp), subTick, sprinting, MoveButtons.Sprint);
         }
 
         public (Vector2 Walking, Vector2 Sprinting) GetVelocityInput(InputMoverComponent mover)
@@ -477,11 +490,11 @@ namespace Content.Shared.Movement.Systems
             component.LastInputSubTick = 0;
         }
 
-        public virtual void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool walking)
+        public virtual void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool sprinting)
         {
             // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
 
-            SetMoveInput(entity, subTick, walking, MoveButtons.Walk);
+            SetMoveInput(entity, subTick, sprinting, MoveButtons.Walk);
         }
 
         /// <summary>
@@ -603,6 +616,27 @@ namespace Content.Shared.Movement.Systems
             }
         }
 
+        private sealed class SprintInputCmdHandler : InputCmdHandler
+        {
+            private readonly SharedMoverController _controller;
+
+            public SprintInputCmdHandler(SharedMoverController controller)
+            {
+                _controller = controller;
+            }
+
+            public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
+            {
+                if (session?.AttachedEntity == null)
+                    return false;
+
+                _controller.HandleFastSprintChange(session.AttachedEntity.Value,
+                    message.SubTick,
+                    message.State == BoundKeyState.Down);
+                return false;
+            }
+        }
+
         private sealed class ShuttleInputCmdHandler : InputCmdHandler
         {
             private readonly SharedMoverController _controller;
@@ -634,6 +668,7 @@ namespace Content.Shared.Movement.Systems
         Left = 4,
         Right = 8,
         Walk = 16,
+        Sprint = 32,
         AnyDirection = Up | Down | Left | Right,
     }
 

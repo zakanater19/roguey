@@ -113,6 +113,9 @@
   categories: [ ForkFiltered ]
   description: A regular iron woodcutting axe.
   components:
+  - type: Tag
+    tags:
+    - Axe
   - type: Sharp
   - type: Sprite
     sprite: _Baseline/RogueTown/Weapons/axe.rsi

@@ -11,6 +11,9 @@ public sealed partial class RogueTownMiningWallComponent : Component
     public ProtoId<TagPrototype> RequiredToolTag = "Pickaxe";
 
     [DataField]
+    public float StaminaCost = 5f;
+
+    [DataField]
     public List<RogueTownMiningDropEntry> ExtraDrops = new();
 }
 

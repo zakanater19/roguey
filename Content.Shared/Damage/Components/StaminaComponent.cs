@@ -24,19 +24,45 @@ public sealed partial class StaminaComponent : Component
     /// How much stamina reduces per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public float Decay = 3f;
+    public float Decay = 5f;
 
     /// <summary>
     /// How much time after receiving damage until stamina starts decreasing.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public float Cooldown = 3f;
+    public float Cooldown = 5f;
 
     /// <summary>
     /// How much stamina damage this entity has taken.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float StaminaDamage;
+
+    /// <summary>
+    /// Whether reaching zero stamina should use the classic stamina-crit behavior.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CollapseOnExhaustion = true;
+
+    /// <summary>
+    /// Whether stamina is empty and restricted actions remain locked.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public bool Exhausted;
+
+    /// <summary>
+    /// Available stamina required before clearing exhaustion.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ExhaustionRecovery = 30f;
+
+    [DataField]
+    public float CombatDrainPerSecond;
+
+    [DataField]
+    public float SprintDrainPerSecond;
+
+    public float PassiveDrainAccumulator;
 
     /// <summary>
     /// The base stamina the entity requires to enter stam crit. Should rarely if ever be modified outside of yaml.

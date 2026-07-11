@@ -1,5 +1,6 @@
 using Content.Shared._Baseline.RogueTown;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Damage.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -12,6 +13,7 @@ public sealed class RogueTownMiningWallSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
@@ -30,14 +32,29 @@ public sealed class RogueTownMiningWallSystem : EntitySystem
             return;
         }
 
-        if (_tag.HasTag(origin, component.RequiredToolTag))
+        if (TryComp<StaminaComponent>(origin, out var stamina) && stamina.Exhausted)
+        {
+            args.Cancelled = true;
             return;
+        }
 
-        if (_hands.TryGetActiveItem((origin, CompOrNull<HandsComponent>(origin)), out var held) &&
-            _tag.HasTag(held.Value, component.RequiredToolTag))
+        var validTool = _tag.HasTag(origin, component.RequiredToolTag);
+        EntityUid? heldTool = null;
+
+        if (_hands.TryGetActiveItem((origin, CompOrNull<HandsComponent>(origin)), out var held))
+        {
+            heldTool = held.Value;
+            validTool |= _tag.HasTag(held.Value, component.RequiredToolTag);
+        }
+
+        if (!validTool)
+        {
+            args.Cancelled = true;
             return;
+        }
 
-        args.Cancelled = true;
+        if (args.Damage.GetTotal() > 0)
+            _stamina.TakeStaminaDamage(origin, component.StaminaCost, with: heldTool, visual: false);
     }
 
     private void OnDestruction(EntityUid uid, RogueTownMiningWallComponent component, DestructionEventArgs args)
