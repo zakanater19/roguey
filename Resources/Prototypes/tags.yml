@@ -1231,6 +1231,9 @@
   id: RogueTownCoal
 
 - type: Tag
+  id: RogueTownFiber # ConstructionGraph: RogueTownCloth
+
+- type: Tag
   id: RogueTownIronIngot
 
 - type: Tag
@@ -1238,6 +1241,9 @@
 
 - type: Tag
   id: RogueTownStone # ConstructionGraph: RogueTownStoneWall
+
+- type: Tag
+  id: RogueTownThorn # ConstructionGraph: RogueTownThornNeedle
 
 - type: Tag
   id: RollingPaper # Storage whitelist: PackPaperRolling, PackPaperRollingFilters

@@ -38,3 +38,67 @@
 
   - node: stoneWall
     entity: RogueTownStoneWall
+
+- type: construction
+  id: RogueTownCloth
+  graph: RogueTownCloth
+  startNode: start
+  targetNode: cloth
+  category: construction-category-materials
+  objectType: Item
+
+- type: constructionGraph
+  id: RogueTownCloth
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cloth
+      steps:
+      - tag: RogueTownFiber
+        name: construction-graph-tag-roguetown-fiber
+        icon:
+          sprite: _Baseline/RogueTown/Items/natural.rsi
+          state: fibers
+        doAfter: 1
+      - tag: RogueTownFiber
+        name: construction-graph-tag-roguetown-fiber
+        icon:
+          sprite: _Baseline/RogueTown/Items/natural.rsi
+          state: fibers
+        doAfter: 1
+
+  - node: cloth
+    entity: RogueTownCloth
+
+- type: construction
+  id: RogueTownThornNeedle
+  graph: RogueTownThornNeedle
+  startNode: start
+  targetNode: thornNeedle
+  category: construction-category-tools
+  objectType: Item
+
+- type: constructionGraph
+  id: RogueTownThornNeedle
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: thornNeedle
+      steps:
+      - tag: RogueTownThorn
+        name: construction-graph-tag-roguetown-thorn
+        icon:
+          sprite: _Baseline/RogueTown/Items/natural.rsi
+          state: thorn
+        doAfter: 1
+      - tag: RogueTownFiber
+        name: construction-graph-tag-roguetown-fiber
+        icon:
+          sprite: _Baseline/RogueTown/Items/natural.rsi
+          state: fibers
+        doAfter: 1
+
+  - node: thornNeedle
+    entity: RogueTownThornNeedle

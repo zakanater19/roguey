@@ -24,11 +24,21 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
     private const string DirtTilePrototype = "FloorRogueTownDirt";
     private const string YuckwaterTilePrototype = "FloorRogueTownYuckwater";
     private const string TreePrototype = "FloraTreeRogueTownStatic";
+    private const string BushPrototype = "FloraRogueTownBush";
+
+    private static readonly string[] GrassFloraPrototypes =
+    {
+        "FloraRogueTownGrass1",
+        "FloraRogueTownGrass2",
+        "FloraRogueTownGrass3",
+    };
 
     // Exact per-region quotas keep small and enormous debug regions visually similar.
     private const float YuckwaterRatio = 0.08f;
     private const float DirtRatio = 0.15f;
     private const float TreeRatio = 0.08f;
+    private const float BushRatio = 0.05f;
+    private const float GrassFloraRatio = 0.10f;
 
     private static readonly Vector2i[] CardinalDirections =
     {
@@ -58,7 +68,7 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
     private RegionJob? _region;
 
     private int _resetRegionIndex;
-    private int _resetTreeIndex;
+    private int _resetFloraIndex;
     private int _resetTileIndex;
 
     private int _debugTileId;
@@ -138,7 +148,7 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
     /// </summary>
     public bool Regenerate()
     {
-        if (_phase is GenerationPhase.ResetTrees or GenerationPhase.ResetTiles)
+        if (_phase is GenerationPhase.ResetFlora or GenerationPhase.ResetTiles)
             return false;
 
         CacheTileIds();
@@ -159,9 +169,9 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         }
 
         _resetRegionIndex = 0;
-        _resetTreeIndex = 0;
+        _resetFloraIndex = 0;
         _resetTileIndex = 0;
-        _phase = GenerationPhase.ResetTrees;
+        _phase = GenerationPhase.ResetFlora;
         return true;
     }
 
@@ -170,7 +180,7 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
     /// </summary>
     public bool Ungenerate()
     {
-        if (_phase is GenerationPhase.ResetTrees or GenerationPhase.ResetTiles)
+        if (_phase is GenerationPhase.ResetFlora or GenerationPhase.ResetTiles)
         {
             return false;
         }
@@ -183,10 +193,10 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         _region = null;
 
         _resetRegionIndex = 0;
-        _resetTreeIndex = 0;
+        _resetFloraIndex = 0;
         _resetTileIndex = 0;
         _resetMode = ResetMode.Ungenerate;
-        _phase = GenerationPhase.ResetTrees;
+        _phase = GenerationPhase.ResetFlora;
         return true;
     }
 
@@ -212,8 +222,8 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
     {
         switch (_phase)
         {
-            case GenerationPhase.ResetTrees:
-                StepResetTrees();
+            case GenerationPhase.ResetFlora:
+                StepResetFlora();
                 break;
             case GenerationPhase.ResetTiles:
                 StepResetTiles();
@@ -352,9 +362,12 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         var dryCount = count - region.WaterCount;
         var grassCount = dryCount - region.DirtCount;
         region.TreeCount = Math.Min(grassCount, (int)MathF.Round(dryCount * TreeRatio));
+        region.BushCount = Math.Min(grassCount - region.TreeCount, (int)MathF.Round(dryCount * BushRatio));
+        region.GrassFloraCount = Math.Min(grassCount - region.TreeCount - region.BushCount,
+            (int)MathF.Round(dryCount * GrassFloraRatio));
         region.OrderIndex = 0;
 
-        _generatedRegions.Add(new GeneratedRegion(region.GridUid, region.Tiles, region.SpawnedTrees));
+        _generatedRegions.Add(new GeneratedRegion(region.GridUid, region.Tiles, region.SpawnedFlora));
         _phase = GenerationPhase.OrderRegion;
     }
 
@@ -376,12 +389,25 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
             : index < region.WaterCount + region.DirtCount
                 ? _dirtTileId
                 : _grassTileId;
-        var spawnTree = index >= region.Tiles.Count - region.TreeCount;
+        string? spawnPrototype = null;
+        var grassStart = region.WaterCount + region.DirtCount;
+        // Flora is considered only after the water and dirt ranges, so it can only land on grass tiles.
+        if (index >= grassStart)
+        {
+            var grassIndex = index - grassStart;
+            var grassCount = region.Tiles.Count - grassStart;
+            if (grassIndex >= grassCount - region.TreeCount)
+                spawnPrototype = TreePrototype;
+            else if (grassIndex >= grassCount - region.TreeCount - region.BushCount)
+                spawnPrototype = BushPrototype;
+            else if (grassIndex >= grassCount - region.TreeCount - region.BushCount - region.GrassFloraCount)
+                spawnPrototype = _random.Pick(GrassFloraPrototypes);
+        }
         var offset = position - region.Center;
         var distanceSquared = offset.X * offset.X + offset.Y * offset.Y;
 
         // A small random tie-breaker keeps equal-distance rings from looking mechanically ordered.
-        region.OrderedTiles.Enqueue(new BogTile(position, tileId, spawnTree),
+        region.OrderedTiles.Enqueue(new BogTile(position, tileId, spawnPrototype),
             distanceSquared + _random.NextFloat(0f, 0.25f));
     }
 
@@ -397,10 +423,10 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
 
         _maps.SetTile(region.GridUid, region.Grid, bogTile.Position, new Tile(bogTile.TileId));
 
-        if (bogTile.SpawnTree)
+        if (bogTile.SpawnPrototype is { } spawnPrototype)
         {
-            var tree = Spawn(TreePrototype, _maps.GridTileToLocal(region.GridUid, region.Grid, bogTile.Position));
-            region.SpawnedTrees.Add(tree);
+            var flora = Spawn(spawnPrototype, _maps.GridTileToLocal(region.GridUid, region.Grid, bogTile.Position));
+            region.SpawnedFlora.Add(flora);
         }
     }
 
@@ -436,7 +462,7 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         return new Vector2i((int)MathF.Floor(center.X), (int)MathF.Floor(center.Y));
     }
 
-    private void StepResetTrees()
+    private void StepResetFlora()
     {
         if (_resetRegionIndex >= _generatedRegions.Count)
         {
@@ -447,16 +473,16 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         }
 
         var region = _generatedRegions[_resetRegionIndex];
-        if (_resetTreeIndex >= region.SpawnedTrees.Count)
+        if (_resetFloraIndex >= region.SpawnedFlora.Count)
         {
             _resetRegionIndex++;
-            _resetTreeIndex = 0;
+            _resetFloraIndex = 0;
             return;
         }
 
-        var tree = region.SpawnedTrees[_resetTreeIndex++];
-        if (!Deleted(tree))
-            QueueDel(tree);
+        var flora = region.SpawnedFlora[_resetFloraIndex++];
+        if (!Deleted(flora))
+            QueueDel(flora);
     }
 
     private void StepResetTiles()
@@ -492,7 +518,7 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
     private enum GenerationPhase : byte
     {
         Idle,
-        ResetTrees,
+        ResetFlora,
         ResetTiles,
         Scan,
         DiscoverRegion,
@@ -524,7 +550,7 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         public readonly List<Vector2i> Tiles = new();
         public readonly Queue<Vector2i> Frontier = new();
         public HashSet<Vector2i>? Visited = new();
-        public readonly List<EntityUid> SpawnedTrees = new();
+        public readonly List<EntityUid> SpawnedFlora = new();
         public readonly PriorityQueue<BogTile, float> OrderedTiles = new();
 
         public int ShuffleIndex;
@@ -532,6 +558,8 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         public int WaterCount;
         public int DirtCount;
         public int TreeCount;
+        public int BushCount;
+        public int GrassFloraCount;
         public readonly Vector2i Center;
 
         public RegionJob(EntityUid gridUid, MapGridComponent grid, Vector2i seed, Vector2i center)
@@ -544,12 +572,12 @@ public sealed class RogueTownBogGenerationSystem : EntitySystem
         }
     }
 
-    private readonly record struct BogTile(Vector2i Position, int TileId, bool SpawnTree);
+    private readonly record struct BogTile(Vector2i Position, int TileId, string? SpawnPrototype);
 
     private sealed record GeneratedRegion(
         EntityUid GridUid,
         List<Vector2i> Tiles,
-        List<EntityUid> SpawnedTrees);
+        List<EntityUid> SpawnedFlora);
 }
 
 /// <summary>

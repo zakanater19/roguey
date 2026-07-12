@@ -1,0 +1,94 @@
+- type: entity
+  parent: FoodInjectableBase
+  id: RogueTownBerries
+  name: jacksberries
+  categories: [ ForkFiltered ]
+  description: A small handful of wild berries.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - berry
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/natural.rsi
+    state: berries
+  - type: Item
+    size: Tiny
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+
+- type: entity
+  parent: BaseItem
+  id: RogueTownFibers
+  name: fibers
+  categories: [ ForkFiltered ]
+  description: A handful of tough natural fibers.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/natural.rsi
+    state: fibers
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - RogueTownFiber
+
+- type: entity
+  parent: BaseItem
+  id: RogueTownThorn
+  name: thorn
+  categories: [ ForkFiltered ]
+  description: A long, sharp thorn.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/natural.rsi
+    state: thorn
+  - type: Item
+    size: Tiny
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+  - type: Tag
+    tags:
+    - RogueTownThorn
+
+- type: entity
+  parent: BaseItem
+  id: RogueTownCloth
+  name: cloth
+  categories: [ ForkFiltered ]
+  description: A small piece of rough woven cloth.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/natural.rsi
+    state: cloth
+  - type: Item
+    size: Tiny
+  - type: Construction
+    graph: RogueTownCloth
+    node: cloth
+
+- type: entity
+  parent: BaseItem
+  id: RogueTownThornNeedle
+  name: thorn needle
+  categories: [ ForkFiltered ]
+  description: A thorn bound with fiber into a crude sewing needle.
+  components:
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Items/natural.rsi
+    state: thorn-needle
+  - type: Item
+    size: Tiny
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
+  - type: Construction
+    graph: RogueTownThornNeedle
+    node: thornNeedle

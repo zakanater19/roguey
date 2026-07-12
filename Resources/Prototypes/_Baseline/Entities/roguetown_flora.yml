@@ -39,3 +39,78 @@
           RogueTownSmallLog:
             min: 4
             max: 5
+
+- type: entity
+  abstract: true
+  id: BaseRogueTownBogFlora
+  categories: [ ForkFiltered ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    noRot: true
+    sprite: _Baseline/RogueTown/Flora/bog_flora.rsi
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  abstract: true
+  parent: BaseRogueTownBogFlora
+  id: BaseRogueTownBogGrass
+  components:
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: RogueTownMiningWall
+    requiredToolTag: Axe
+    alternativeToolTag: Sword
+    toolDamage: 5
+    alternativeToolDamage: 5
+    staminaCost: 0
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseRogueTownBogFlora
+  id: FloraRogueTownBush
+  name: bush
+  description: A dense bush. Something useful may be hidden among its branches.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    state: bush
+    drawdepth: OverMobs
+  - type: RogueTownBush
+
+- type: entity
+  parent: BaseRogueTownBogGrass
+  id: FloraRogueTownGrass1
+  name: grass
+  suffix: RogueTown, 1
+  components:
+  - type: Sprite
+    state: grass1
+
+- type: entity
+  parent: BaseRogueTownBogGrass
+  id: FloraRogueTownGrass2
+  name: grass
+  suffix: RogueTown, 2
+  components:
+  - type: Sprite
+    state: grass2
+
+- type: entity
+  parent: BaseRogueTownBogGrass
+  id: FloraRogueTownGrass3
+  name: grass
+  suffix: RogueTown, 3
+  components:
+  - type: Sprite
+    state: grass3
