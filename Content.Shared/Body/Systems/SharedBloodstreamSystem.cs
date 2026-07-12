@@ -14,6 +14,7 @@ using Content.Shared.Forensics.Components;
 using Content.Shared.Gibbing;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Medical.Healing;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
@@ -85,10 +86,15 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 var bloodPercentage = GetBloodLevel(uid);
                 if (bloodPercentage < bloodstream.BloodlossThreshold)
                 {
-                    // bloodloss damage is based on the base value, and modified by how low your blood level is.
-                    var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
+                    // A stitched and bandaged wound is stable. Missing blood can still regenerate, but it no longer
+                    // keeps lowering health unless a fresh bleeding wound opens.
+                    if (!HasComp<BandagedWoundComponent>(uid) || bloodstream.BleedAmount > 0)
+                    {
+                        // bloodloss damage is based on the base value, and modified by how low your blood level is.
+                        var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
-                    _damageableSystem.TryChangeDamage(uid, amt, ignoreResistances: false, interruptsDoAfters: false);
+                        _damageableSystem.TryChangeDamage(uid, amt, ignoreResistances: false, interruptsDoAfters: false);
+                    }
 
                     // Apply dizziness as a symptom of bloodloss.
                     // The effect is applied in a way that it will never be cleared without being healthy.

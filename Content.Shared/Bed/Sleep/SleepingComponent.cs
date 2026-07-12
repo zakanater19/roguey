@@ -34,6 +34,12 @@ public sealed partial class SleepingComponent : Component
     public EntityUid? WakeAction;
 
     /// <summary>
+    /// Next time natural sleep regeneration may heal this entity.
+    /// </summary>
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextHealTime;
+
+    /// <summary>
     /// Sound to play when another player attempts to wake this entity.
     /// </summary>
     [DataField]

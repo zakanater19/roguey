@@ -6,6 +6,7 @@
   order:
     - category: Health
     - category: Stamina
+    - category: Sleep
     - alertType: SuitPower
     - category: Internals
     - alertType: Fire
@@ -357,6 +358,20 @@
   description: alerts-stamina-desc
   minSeverity: 0
   maxSeverity: 6
+
+- type: alert
+  id: RogueTownSleep
+  category: Sleep
+  clickEvent: !type:ToggleSleepAlertEvent
+  icons:
+  - sprite: /Textures/Clothing/Head/Hats/pyjamasyndicatered.rsi
+    state: icon
+  - sprite: /Textures/Clothing/Head/Hats/pyjamasyndicatered.rsi
+    state: icon
+  name: alerts-roguetown-sleep-name
+  description: alerts-roguetown-sleep-desc
+  minSeverity: 0
+  maxSeverity: 1
 
 - type: alert
   id: Starving

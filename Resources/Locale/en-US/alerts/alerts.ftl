@@ -52,7 +52,7 @@ alerts-dead-name = Dead
 alerts-dead-desc = You're dead, note that you can still be revived!
 
 alerts-health-name = Health
-alerts-health-desc = [color=green]Green[/color] good. [color=red]Red[/color] bad.
+alerts-health-desc = Your exact health from 0-100%. Below zero, you are dying.
 
 alerts-battery-name = Battery
 alerts-battery-desc = If your battery depletes, you will be unable to use your abilities.
@@ -71,6 +71,9 @@ alerts-hunger-desc = Some food would be good right about now.
 
 alerts-stamina-name = Stamina
 alerts-stamina-desc = Stuns you if it is too low.
+
+alerts-roguetown-sleep-name = Sleep / Wake
+alerts-roguetown-sleep-desc = Lie down to sleep, or begin waking up.
 
 alerts-starving-name = [color=red]Starving[/color]
 alerts-starving-desc = You're severely malnourished. The hunger pains make moving around a chore.

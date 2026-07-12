@@ -46,6 +46,7 @@
   targetNode: cloth
   category: construction-category-materials
   objectType: Item
+  hide: false
 
 - type: constructionGraph
   id: RogueTownCloth
@@ -78,6 +79,7 @@
   targetNode: thornNeedle
   category: construction-category-tools
   objectType: Item
+  hide: false
 
 - type: constructionGraph
   id: RogueTownThornNeedle

@@ -64,6 +64,18 @@ public sealed partial class HealingComponent : Component
     public bool ConsumeOnUse = true;
 
     /// <summary>
+    /// Marks the target as bandaged and prevents repeatedly applying more cloth to the same stitched wound.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AppliesBandage;
+
+    /// <summary>
+    /// Clears an old bandage marker after a newly bleeding wound has been stitched.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool StitchesWound;
+
+    /// <summary>
     /// Sound played on healing begin.
     /// </summary>
     [DataField]

@@ -1,8 +1,10 @@
 using Content.Client.Movement.Systems;
+using Content.Shared.Bed.Sleep;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Content.Shared.Eye.Blinding;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Movement.Components;
@@ -19,13 +21,15 @@ namespace Content.Client.Eye.Blinding
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override bool RequestScreenTexture => true;
-        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _greyscaleShader;
         private readonly ShaderInstance _circleMaskShader;
 
         private BlindableComponent _blindableComponent = default!;
+        private float _sleepOpacity;
 
         public BlindOverlay()
         {
@@ -44,6 +48,26 @@ namespace Content.Client.Eye.Blinding
             var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
             if (playerEntity == null)
+                return false;
+
+            _sleepOpacity = 0f;
+            if (_entityManager.HasComponent<SleepingComponent>(playerEntity.Value))
+            {
+                _sleepOpacity = 1f;
+            }
+            else if (_entityManager.TryGetComponent<SleepTransitionComponent>(playerEntity.Value, out var transition) &&
+                     transition.Phase == SleepTransitionPhase.FallingAsleep)
+            {
+                var duration = (transition.EndsAt - transition.StartedAt).TotalSeconds;
+                if (duration > 0)
+                    _sleepOpacity = Math.Clamp((float) ((_timing.CurTime - transition.StartedAt).TotalSeconds / duration), 0f, 1f);
+            }
+
+            // The sleep fade is screen-space only. It must never draw into world-space or it can bypass the FOV mask.
+            if (_sleepOpacity > 0f)
+                return args.Space == OverlaySpace.ScreenSpace;
+
+            if (args.Space != OverlaySpace.WorldSpace)
                 return false;
 
             if (!_entityManager.TryGetComponent<BlindableComponent>(playerEntity, out var blindComp))
@@ -66,12 +90,18 @@ namespace Content.Client.Eye.Blinding
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (ScreenTexture == null)
-                return;
-
             var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
             if (playerEntity == null)
+                return;
+
+            if (_sleepOpacity > 0f)
+            {
+                args.ScreenHandle.DrawRect(args.ViewportBounds, Color.Black.WithAlpha(_sleepOpacity));
+                return;
+            }
+
+            if (ScreenTexture == null)
                 return;
 
             if (!_blindableComponent.GraceFrame)
@@ -92,6 +122,7 @@ namespace Content.Client.Eye.Blinding
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
+
             worldHandle.UseShader(_greyscaleShader);
             worldHandle.DrawRect(viewport, Color.White);
             worldHandle.UseShader(_circleMaskShader);

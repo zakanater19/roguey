@@ -1,7 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Damage.Systems;
@@ -13,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -34,8 +37,9 @@ namespace Content.Shared.Bed.Sleep;
 public sealed partial class SleepingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BlindableSystem _blindableSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedEmitSoundSystem _emitSound = default!;
@@ -45,6 +49,10 @@ public sealed partial class SleepingSystem : EntitySystem
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
     public static readonly EntProtoId StatusEffectForcedSleeping = "StatusEffectForcedSleeping";
+    public static readonly ProtoId<AlertPrototype> SleepAlertId = "RogueTownSleep";
+
+    private static readonly TimeSpan TransitionDuration = TimeSpan.FromSeconds(10);
+    private static readonly TimeSpan HealInterval = TimeSpan.FromSeconds(1);
 
     public override void Initialize()
     {
@@ -53,6 +61,8 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, SleepActionEvent>(OnBedSleepAction);
 
         SubscribeLocalEvent<MobStateComponent, SleepStateChangedEvent>(OnSleepStateChanged);
+        SubscribeLocalEvent<MobStateComponent, ComponentStartup>(OnMobStateStartup);
+        SubscribeLocalEvent<MobStateComponent, ToggleSleepAlertEvent>(OnToggleSleepAlert);
         SubscribeLocalEvent<MobStateComponent, WakeActionEvent>(OnWakeAction);
         SubscribeLocalEvent<MobStateComponent, SleepActionEvent>(OnSleepAction);
 
@@ -78,6 +88,75 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
 
         SubscribeLocalEvent<SleepingComponent, BeforeForceSayEvent>(OnChangeForceSay, after: new []{typeof(PainNumbnessSystem)});
+
+        SubscribeLocalEvent<SleepTransitionComponent, SpeakAttemptEvent>(OnTransitionSpeakAttempt);
+        SubscribeLocalEvent<SleepTransitionComponent, StandUpAttemptEvent>(OnTransitionStandUpAttempt);
+        SubscribeLocalEvent<SleepTransitionComponent, ConsciousAttemptEvent>(OnTransitionConsciousAttempt);
+        SubscribeLocalEvent<SleepTransitionComponent, EmoteAttemptEvent>(OnTransitionEmoteAttempt);
+        SubscribeLocalEvent<SleepTransitionComponent, MobStateChangedEvent>(OnTransitionMobStateChanged);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var now = _gameTiming.CurTime;
+        var transitions = EntityQueryEnumerator<SleepTransitionComponent>();
+        while (transitions.MoveNext(out var uid, out var transition))
+        {
+            if (now < transition.EndsAt)
+                continue;
+
+            if (transition.Phase == SleepTransitionPhase.FallingAsleep)
+            {
+                EnsureComp<SleepingComponent>(uid);
+                RemComp<SleepTransitionComponent>(uid);
+                continue;
+            }
+
+            RemComp<SleepTransitionComponent>(uid);
+            RemComp<SleepingComponent>(uid);
+        }
+
+        var sleepers = EntityQueryEnumerator<SleepingComponent, DamageableComponent>();
+        while (sleepers.MoveNext(out var uid, out var sleeping, out var damageable))
+        {
+            if (now < sleeping.NextHealTime)
+                continue;
+
+            sleeping.NextHealTime = now + HealInterval;
+            Dirty(uid, sleeping);
+
+            var healing = new DamageSpecifier();
+            foreach (var (type, amount) in damageable.Damage.DamageDict)
+            {
+                if (amount > 0)
+                    healing.DamageDict[type] = -0.25f;
+            }
+
+            if (!healing.Empty)
+                _damageable.TryChangeDamage(uid, healing, true);
+        }
+    }
+
+    private void OnMobStateStartup(Entity<MobStateComponent> ent, ref ComponentStartup args)
+    {
+        _alerts.ShowAlert(ent.Owner, SleepAlertId, HasComp<SleepingComponent>(ent) ? (short) 1 : (short) 0);
+    }
+
+    private void OnToggleSleepAlert(Entity<MobStateComponent> ent, ref ToggleSleepAlertEvent args)
+    {
+        if (TryComp<SleepTransitionComponent>(ent, out var transition))
+        {
+            // Falling asleep is voluntary and cancellable. Once waking starts it must finish.
+            args.Handled = transition.Phase == SleepTransitionPhase.FallingAsleep &&
+                           CancelFallingAsleep((ent.Owner, transition));
+            return;
+        }
+
+        args.Handled = HasComp<SleepingComponent>(ent)
+            ? TryWakeWithCooldown(ent.Owner)
+            : TrySleeping((ent, ent.Comp));
     }
 
     private void OnUnbuckleAttempt(Entity<SleepingComponent> ent, ref UnbuckleAttemptEvent args)
@@ -145,20 +224,20 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnCompInit(Entity<SleepingComponent> ent, ref ComponentInit args)
     {
+        ent.Comp.NextHealTime = _gameTiming.CurTime + HealInterval;
         var ev = new SleepStateChangedEvent(true);
         RaiseLocalEvent(ent, ref ev);
         _blindableSystem.UpdateIsBlind(ent.Owner);
-        _actionsSystem.AddAction(ent, ref ent.Comp.WakeAction, WakeActionId, ent);
+        _alerts.ShowAlert(ent.Owner, SleepAlertId, 1);
     }
 
     private void OnComponentRemoved(Entity<SleepingComponent> ent, ref ComponentRemove args)
     {
-        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.WakeAction);
-
         var ev = new SleepStateChangedEvent(false);
         RaiseLocalEvent(ent, ref ev);
 
         _blindableSystem.UpdateIsBlind(ent.Owner);
+        _alerts.ShowAlert(ent.Owner, SleepAlertId, 0);
     }
 
     private void OnSpeakAttempt(Entity<SleepingComponent> ent, ref SpeakAttemptEvent args)
@@ -296,12 +375,30 @@ public sealed partial class SleepingSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return false;
 
+        // Critical health is the HUD's "Dying" state and cannot deliberately enter sleep.
+        if (ent.Comp.CurrentState != MobState.Alive)
+            return false;
+
         var tryingToSleepEvent = new TryingToSleepEvent(ent);
         RaiseLocalEvent(ent, ref tryingToSleepEvent);
         if (tryingToSleepEvent.Cancelled)
             return false;
 
-        EnsureComp<SleepingComponent>(ent);
+        if (HasComp<SleepingComponent>(ent) || HasComp<SleepTransitionComponent>(ent))
+            return false;
+
+        var transition = EnsureComp<SleepTransitionComponent>(ent);
+        transition.Phase = SleepTransitionPhase.FallingAsleep;
+        transition.StartedAt = _gameTiming.CurTime;
+        transition.EndsAt = transition.StartedAt + TransitionDuration;
+        Dirty(ent.Owner, transition);
+
+        EnsureComp<StunnedComponent>(ent);
+        EnsureComp<KnockedDownComponent>(ent);
+        _alerts.ShowAlert(ent.Owner, SleepAlertId, 1, (transition.StartedAt, transition.EndsAt));
+
+        var started = new SleepTransitionStartedEvent(transition.Phase);
+        RaiseLocalEvent(ent.Owner, ref started, true);
         return true;
     }
 
@@ -347,7 +444,69 @@ public sealed partial class SleepingSystem : EntitySystem
             _popupSystem.PopupClient(Loc.GetString("wake-other-success", ("target", Identity.Entity(ent, EntityManager))), ent, user);
         }
 
-        return RemComp<SleepingComponent>(ent);
+        if (force)
+        {
+            RemComp<SleepTransitionComponent>(ent.Owner);
+            return RemComp<SleepingComponent>(ent);
+        }
+
+        if (HasComp<SleepTransitionComponent>(ent))
+            return false;
+
+        var transition = EnsureComp<SleepTransitionComponent>(ent);
+        transition.Phase = SleepTransitionPhase.WakingUp;
+        transition.StartedAt = _gameTiming.CurTime;
+        transition.EndsAt = transition.StartedAt + TransitionDuration;
+        Dirty(ent.Owner, transition);
+        _alerts.ShowAlert(ent.Owner, SleepAlertId, 1, (transition.StartedAt, transition.EndsAt));
+
+        var started = new SleepTransitionStartedEvent(transition.Phase);
+        RaiseLocalEvent(ent.Owner, ref started, true);
+        return true;
+    }
+
+    private void OnTransitionSpeakAttempt(Entity<SleepTransitionComponent> ent, ref SpeakAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnTransitionStandUpAttempt(Entity<SleepTransitionComponent> ent, ref StandUpAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnTransitionConsciousAttempt(Entity<SleepTransitionComponent> ent, ref ConsciousAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnTransitionEmoteAttempt(Entity<SleepTransitionComponent> ent, ref EmoteAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnTransitionMobStateChanged(Entity<SleepTransitionComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (ent.Comp.Phase == SleepTransitionPhase.FallingAsleep && args.NewMobState != MobState.Alive)
+        {
+            CancelFallingAsleep(ent);
+            return;
+        }
+
+        if (args.NewMobState == MobState.Dead)
+            RemComp<SleepTransitionComponent>(ent);
+    }
+
+    private bool CancelFallingAsleep(Entity<SleepTransitionComponent> ent)
+    {
+        if (ent.Comp.Phase != SleepTransitionPhase.FallingAsleep)
+            return false;
+
+        RemComp<SleepTransitionComponent>(ent.Owner);
+        _stun.TryUnstun(ent.Owner);
+        _stun.TryStanding(ent.Owner);
+        _alerts.ShowAlert(ent.Owner, SleepAlertId, 0);
+        return true;
     }
 
     /// <summary>

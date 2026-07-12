@@ -17,6 +17,7 @@ using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Damage.ForceSay;
@@ -835,6 +836,17 @@ public sealed partial class ChatUIController : UIController
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
+        const ChatChannel sleepingHiddenChannels = ChatChannel.Local |
+                                                   ChatChannel.Whisper |
+                                                   ChatChannel.Radio |
+                                                   ChatChannel.Emotes;
+        if (_player.LocalEntity is { } local &&
+            _ent.HasComponent<SleepingComponent>(local) &&
+            (msg.Channel & sleepingHiddenChannels) != 0)
+        {
+            return;
+        }
+
         // color the name unless it's something like "the old man"
         if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
         {

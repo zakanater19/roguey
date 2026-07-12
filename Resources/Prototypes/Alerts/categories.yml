@@ -20,6 +20,9 @@
   id: Stamina
 
 - type: alertCategory
+  id: Sleep
+
+- type: alertCategory
   id: Piloting
 
 - type: alertCategory

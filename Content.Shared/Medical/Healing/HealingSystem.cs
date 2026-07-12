@@ -65,11 +65,16 @@ public sealed class HealingSystem : EntitySystem
             return;
         }
 
+        var treated = false;
+        var closedWound = false;
+
         // Heal some bloodloss damage.
         if (healing.BloodlossModifier != 0 && bloodstream != null)
         {
             var isBleeding = bloodstream.BleedAmount > 0;
             _bloodstreamSystem.TryModifyBleedAmount((target.Owner, bloodstream), healing.BloodlossModifier);
+            treated |= isBleeding;
+            closedWound = isBleeding && bloodstream.BleedAmount <= 0;
             if (isBleeding != bloodstream.BleedAmount > 0)
             {
                 var popup = (args.User == target.Owner)
@@ -81,10 +86,26 @@ public sealed class HealingSystem : EntitySystem
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0 && bloodstream != null)
+        {
             _bloodstreamSystem.TryModifyBloodLevel((target.Owner, bloodstream), healing.ModifyBloodLevel);
+            treated = true;
+        }
 
-        if (!_damageable.TryChangeDamage(target.Owner, healing.Damage * _damageable.UniversalTopicalsHealModifier, out var healed, true, origin: args.Args.User) && healing.BloodlossModifier != 0)
+        var changedDamage = _damageable.TryChangeDamage(target.Owner,
+            healing.Damage * _damageable.UniversalTopicalsHealModifier,
+            out var healed,
+            true,
+            origin: args.Args.User);
+        treated |= changedDamage;
+
+        if (!treated)
             return;
+
+        if (healing.StitchesWound && closedWound)
+            RemComp<BandagedWoundComponent>(target);
+
+        if (healing.AppliesBandage)
+            EnsureComp<BandagedWoundComponent>(target);
 
         var total = healed.GetTotal();
 
@@ -133,6 +154,9 @@ public sealed class HealingSystem : EntitySystem
 
     private bool HasDamage(Entity<HealingComponent> healing, Entity<DamageableComponent> target)
     {
+        if (healing.Comp.AppliesBandage && HasComp<BandagedWoundComponent>(target))
+            return false;
+
         TryComp<BloodstreamComponent>(target, out var bloodstream);
         if (healing.Comp.RequireNoBleeding && bloodstream?.BleedAmount > 0)
             return false;

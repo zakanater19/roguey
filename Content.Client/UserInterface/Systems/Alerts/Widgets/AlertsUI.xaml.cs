@@ -14,6 +14,9 @@ namespace Content.Client.UserInterface.Systems.Alerts.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class AlertsUI : UIWidget
 {
+    private static readonly ProtoId<AlertPrototype> HiddenInternalsAlert = "Internals";
+    private static readonly ProtoId<AlertPrototype> HiddenOxygenAlert = "LowOxygen";
+
     // also known as Control.Children?
     private readonly Dictionary<AlertKey, AlertControl> _alertControls = new();
 
@@ -56,7 +59,8 @@ public sealed partial class AlertsUI : UIWidget
         var toRemove = new List<AlertKey>();
         foreach (var existingKey in _alertControls.Keys)
         {
-            if (!alertStates.ContainsKey(existingKey))
+            if (!alertStates.ContainsKey(existingKey) ||
+                existingKey.AlertType is { } type && IsHiddenRightHudAlert(type))
                 toRemove.Add(existingKey);
         }
 
@@ -84,6 +88,9 @@ public sealed partial class AlertsUI : UIWidget
             }
 
             var alertType = alertKey.AlertType.Value;
+            if (IsHiddenRightHudAlert(alertType))
+                continue;
+
             if (!alertsSystem.TryGet(alertType, out var newAlert))
             {
                 Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
@@ -134,6 +141,11 @@ public sealed partial class AlertsUI : UIWidget
                 _alertControls[newAlert.AlertKey] = newAlertControl;
             }
         }
+    }
+
+    private static bool IsHiddenRightHudAlert(ProtoId<AlertPrototype> alertType)
+    {
+        return alertType == HiddenInternalsAlert || alertType == HiddenOxygenAlert;
     }
 
     private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)

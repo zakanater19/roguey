@@ -80,6 +80,7 @@
     delay: 5
     selfHealPenaltyMultiplier: 1
     requireNoBleeding: true
+    appliesBandage: true
     healingBeginSound:
       path: /Audio/Items/Medical/brutepack_begin.ogg
     healingEndSound:
@@ -112,6 +113,7 @@
     delay: 5
     selfHealPenaltyMultiplier: 1
     consumeOnUse: false
+    stitchesWound: true
     healingBeginSound:
       path: /Audio/Items/Medical/brutepack_begin.ogg
     healingEndSound:

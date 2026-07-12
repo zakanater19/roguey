@@ -2,7 +2,11 @@ using System.Numerics;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
+using Content.Shared.Damage.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -13,6 +17,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
     public sealed class AlertControl : BaseButton
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
 
         private readonly SpriteSystem _sprite;
 
@@ -40,6 +45,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 
         private readonly SpriteView _icon;
         private readonly CooldownGraphic _cooldownGraphic;
+        private readonly Label? _healthLabel;
 
         private EntityUid _spriteViewEntity;
 
@@ -71,6 +77,20 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             SetupIcon();
 
             Children.Add(_icon);
+            if (Alert.ID is "HumanHealth" or "HumanCrit")
+            {
+                _icon.Visible = false;
+                _healthLabel = new Label
+                {
+                    MinSize = new Vector2(64, 64),
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
+                    Align = Label.AlignMode.Center,
+                    FontColorOverride = Color.White,
+                };
+                Children.Add(_healthLabel);
+            }
+
             _cooldownGraphic = new CooldownGraphic
             {
                 MaxSize = new Vector2(64, 64)
@@ -105,6 +125,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         {
             base.FrameUpdate(args);
             UserInterfaceManager.GetUIController<AlertsUIController>().UpdateAlertSpriteEntity(_spriteViewEntity, Alert);
+            UpdateHealthText();
 
             if (!Cooldown.HasValue)
             {
@@ -114,6 +135,28 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             }
 
             _cooldownGraphic.FromTime(Cooldown.Value.Start, Cooldown.Value.End);
+        }
+
+        private void UpdateHealthText()
+        {
+            if (_healthLabel == null || _player.LocalEntity is not { } player)
+                return;
+
+            if (Alert.ID == "HumanCrit")
+            {
+                _healthLabel.Text = "Dying";
+                _healthLabel.FontColorOverride = Color.Red;
+                return;
+            }
+
+            if (!_entityManager.TryGetComponent<DamageableComponent>(player, out var damage) ||
+                !_entityManager.System<MobThresholdSystem>().TryGetThresholdForState(player, MobState.Critical, out var threshold))
+                return;
+
+            var percent = 100 - (int) MathF.Round(damage.TotalDamage.Float() / threshold.Value.Float() * 100f);
+            percent = Math.Clamp(percent, 0, 100);
+            _healthLabel.Text = $"{percent}%";
+            _healthLabel.FontColorOverride = percent > 60 ? Color.LimeGreen : percent > 30 ? Color.Yellow : Color.Red;
         }
 
         private void SetupIcon()
