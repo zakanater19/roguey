@@ -16,6 +16,8 @@
         Slash: 15
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: RogueTownBleedOnHit
+    bleedAmount: 2
   - type: Item
     size: Normal
     shape:

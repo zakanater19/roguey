@@ -53,8 +53,7 @@ public sealed partial class BloodstreamComponent : Component
     /// How much is this entity currently bleeding?
     /// Higher numbers mean more blood lost every tick.
     ///
-    /// Goes down slowly over time, and items like bandages
-    /// or clotting reagents can lower bleeding.
+    /// Items such as sutures or clotting reagents can lower bleeding.
     /// </summary>
     /// <remarks>
     /// This generally corresponds to an amount of damage and can't go above 100.
@@ -66,7 +65,7 @@ public sealed partial class BloodstreamComponent : Component
     /// How much should bleeding be reduced every update interval?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float BleedReductionAmount = 0.33f;
+    public float BleedReductionAmount = 0f;
 
     /// <summary>
     /// How high can <see cref="BleedAmount"/> go?

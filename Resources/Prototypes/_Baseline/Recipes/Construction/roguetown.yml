@@ -102,3 +102,35 @@
 
   - node: thornNeedle
     entity: RogueTownThornNeedle
+
+- type: construction
+  id: RogueStoneAxe
+  graph: RogueStoneAxe
+  startNode: start
+  targetNode: stoneAxe
+  category: construction-category-tools
+  objectType: Item
+
+- type: constructionGraph
+  id: RogueStoneAxe
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: stoneAxe
+      steps:
+      - tag: RogueTownSmallLog
+        name: construction-graph-tag-roguetown-small-log
+        icon:
+          sprite: _Baseline/RogueTown/Items/logsmall.rsi
+          state: icon
+        doAfter: 1
+      - tag: RogueTownStone
+        name: construction-graph-tag-roguetown-stone
+        icon:
+          sprite: _Baseline/RogueTown/Items/stone.rsi
+          state: icon
+        doAfter: 1
+
+  - node: stoneAxe
+    entity: RogueStoneAxe

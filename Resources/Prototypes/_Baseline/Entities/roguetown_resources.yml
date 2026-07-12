@@ -16,6 +16,7 @@
   - type: Tag
     tags:
     - Wooden
+    - RogueTownSmallLog
   - type: PhysicalComposition
     materialComposition:
       Wood: 100
@@ -42,6 +43,13 @@
     - RogueTownStone
   - type: StaticPrice
     price: 1
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: RogueTownBleedOnHit
+    bleedAmount: 1.25
+    bleedChance: 0.2
 
 - type: entity
   parent: BaseItem
@@ -109,7 +117,7 @@
 - type: entity
   parent: BaseItem
   id: RogueWoodcuttingAxe
-  name: axe
+  name: iron axe
   categories: [ ForkFiltered ]
   description: A regular iron woodcutting axe.
   components:
@@ -126,12 +134,14 @@
     swingLeft: true
     damage:
       types:
-        Slash: 5
+        Slash: 10
         Structural: 100
     soundHit:
       path: /Audio/Effects/chop.ogg
       params:
         variation: 0.05
+  - type: RogueTownBleedOnHit
+    bleedAmount: 1.25
   - type: Item
     size: Normal
     shape:
@@ -149,6 +159,53 @@
     materialComposition:
       Steel: 100
       Wood: 100
+
+- type: entity
+  parent: BaseItem
+  id: RogueStoneAxe
+  name: stone axe
+  categories: [ ForkFiltered ]
+  description: A sharpened stone lashed to a wooden haft. Crude, but useful for chopping.
+  components:
+  - type: Tag
+    tags:
+    - Axe
+  - type: Sharp
+  - type: Sprite
+    sprite: _Baseline/RogueTown/Weapons/stoneaxe.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.8
+    wideAnimationRotation: -135
+    swingLeft: true
+    damage:
+      types:
+        Slash: 5
+        Structural: 50
+    soundHit:
+      path: /Audio/Effects/chop.ogg
+      params:
+        variation: 0.05
+  - type: RogueTownBleedOnHit
+    bleedAmount: 1.25
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
+    storedRotation: -45
+  - type: Tool
+    qualities:
+    - Cutting
+    - Slicing
+  - type: UseDelay
+    delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
+  - type: Construction
+    graph: RogueStoneAxe
+    node: stoneAxe
 
 - type: entity
   parent: BaseItem

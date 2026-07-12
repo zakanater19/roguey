@@ -52,6 +52,18 @@ public sealed partial class HealingComponent : Component
     public float SelfHealPenaltyMultiplier = 3f;
 
     /// <summary>
+    /// Prevents this item from treating damage while the target still has an open wound.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequireNoBleeding;
+
+    /// <summary>
+    /// Whether one item or stack unit is consumed after successful treatment.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ConsumeOnUse = true;
+
+    /// <summary>
     /// Sound played on healing begin.
     /// </summary>
     [DataField]

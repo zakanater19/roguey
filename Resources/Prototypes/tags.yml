@@ -1243,6 +1243,9 @@
   id: RogueTownStone # ConstructionGraph: RogueTownStoneWall
 
 - type: Tag
+  id: RogueTownSmallLog # ConstructionGraph: RogueStoneAxe
+
+- type: Tag
   id: RogueTownThorn # ConstructionGraph: RogueTownThornNeedle
 
 - type: Tag

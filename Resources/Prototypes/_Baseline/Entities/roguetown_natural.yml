@@ -62,13 +62,28 @@
   id: RogueTownCloth
   name: cloth
   categories: [ ForkFiltered ]
-  description: A small piece of rough woven cloth.
+  description: A small piece of rough woven cloth. Once a wound is stitched closed, this can slowly treat the injury.
   components:
   - type: Sprite
     sprite: _Baseline/RogueTown/Items/natural.rsi
     state: cloth
   - type: Item
     size: Tiny
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      types:
+        Blunt: -1
+        Slash: -1
+        Piercing: -1
+    delay: 5
+    selfHealPenaltyMultiplier: 1
+    requireNoBleeding: true
+    healingBeginSound:
+      path: /Audio/Items/Medical/brutepack_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/brutepack_end.ogg
   - type: Construction
     graph: RogueTownCloth
     node: cloth
@@ -78,7 +93,7 @@
   id: RogueTownThornNeedle
   name: thorn needle
   categories: [ ForkFiltered ]
-  description: A thorn bound with fiber into a crude sewing needle.
+  description: A thorn bound with fiber into a crude sewing needle. It can stitch a bleeding wound closed, but does not heal the injury.
   components:
   - type: Sprite
     sprite: _Baseline/RogueTown/Items/natural.rsi
@@ -89,6 +104,18 @@
     damage:
       types:
         Piercing: 1
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage: {}
+    bloodlossModifier: -10
+    delay: 5
+    selfHealPenaltyMultiplier: 1
+    consumeOnUse: false
+    healingBeginSound:
+      path: /Audio/Items/Medical/brutepack_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/brutepack_end.ogg
   - type: Construction
     graph: RogueTownThornNeedle
     node: thornNeedle

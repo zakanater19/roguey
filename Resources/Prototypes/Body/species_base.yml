@@ -11,7 +11,8 @@
   save: false
   components:
   - type: DamageVisuals
-    thresholds: [ 10, 20, 30, 50, 70, 100 ]
+    # Keep body blood/injury overlays hidden while health is in the good range.
+    thresholds: [ 20, 30, 50, 70, 100 ]
     targetLayers:
     - "enum.HumanoidVisualLayers.Chest"
     - "enum.HumanoidVisualLayers.Head"

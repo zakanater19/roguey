@@ -59,6 +59,12 @@ public sealed class HealingSystem : EntitySystem
 
         TryComp<BloodstreamComponent>(target, out var bloodstream);
 
+        if (healing.RequireNoBleeding && bloodstream?.BleedAmount > 0)
+        {
+            _popupSystem.PopupClient(Loc.GetString("medical-item-cant-use", ("item", args.Used)), target, args.User);
+            return;
+        }
+
         // Heal some bloodloss damage.
         if (healing.BloodlossModifier != 0 && bloodstream != null)
         {
@@ -84,16 +90,17 @@ public sealed class HealingSystem : EntitySystem
 
         // Re-verify that we can heal the damage.
         var dontRepeat = false;
-        if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
+        if (healing.ConsumeOnUse && TryComp<StackComponent>(args.Used.Value, out var stackComp))
         {
             _stacks.ReduceCount((args.Used.Value, stackComp), 1);
 
             if (_stacks.GetCount((args.Used.Value, stackComp)) <= 0)
                 dontRepeat = true;
         }
-        else
+        else if (healing.ConsumeOnUse)
         {
             PredictedQueueDel(args.Used.Value);
+            dontRepeat = true;
         }
 
         if (target.Owner != args.User)
@@ -126,6 +133,10 @@ public sealed class HealingSystem : EntitySystem
 
     private bool HasDamage(Entity<HealingComponent> healing, Entity<DamageableComponent> target)
     {
+        TryComp<BloodstreamComponent>(target, out var bloodstream);
+        if (healing.Comp.RequireNoBleeding && bloodstream?.BleedAmount > 0)
+            return false;
+
         var damageableDict = target.Comp.Damage.DamageDict;
         var healingDict = healing.Comp.Damage.DamageDict;
         foreach (var type in healingDict)
@@ -136,7 +147,7 @@ public sealed class HealingSystem : EntitySystem
             }
         }
 
-        if (TryComp<BloodstreamComponent>(target, out var bloodstream))
+        if (bloodstream != null)
         {
             // Is ent missing blood that we can restore?
             if (healing.Comp.ModifyBloodLevel > 0
